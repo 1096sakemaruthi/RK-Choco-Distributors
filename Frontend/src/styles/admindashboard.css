@@ -1,0 +1,1101 @@
+/* =========================================================
+   RK CHOCO DISTRIBUTORS
+   ADMIN DASHBOARD
+
+   CLASSIC • PROFESSIONAL • ATTRACTIVE
+   BROWN • CREAM • GOLD
+========================================================= */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8f1e8;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.admin-dashboard-page {
+
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8f1e8 0%,
+      #fffaf3 55%,
+      #f5eadc 100%
+    );
+
+  color: #3e2723;
+
+}
+
+
+/* =========================================================
+   ADMIN NAVBAR
+   ONLY HERE SIZE + COLOUR IMPROVED
+========================================================= */
+
+.admin-navbar {
+
+  width: 100%;
+
+  min-height: 92px;
+
+  padding: 14px 60px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4b2b20,
+      #6d493d,
+      #5d4037
+    );
+
+  border-bottom:
+    3px solid #d4a72c;
+
+  box-shadow:
+    0 7px 25px
+    rgba(62, 39, 35, 0.22);
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 100;
+
+}
+
+
+/* =========================================================
+   NAVBAR BRAND
+========================================================= */
+
+.admin-navbar-brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 17px;
+
+}
+
+
+/* =========================================================
+   NAVBAR LOGO
+========================================================= */
+
+.admin-navbar-logo {
+
+  width: 62px;
+
+  height: 62px;
+
+  border-radius: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffaf2,
+      #f5e8d5
+    );
+
+  color: #5d4037;
+
+  font-size: 27px;
+
+  box-shadow:
+    0 7px 18px
+    rgba(0, 0, 0, 0.18);
+
+}
+
+
+/* =========================================================
+   NAVBAR TITLE
+========================================================= */
+
+.admin-navbar-title h2 {
+
+  color: #ffffff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 29px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  line-height: 1.1;
+
+}
+
+
+.admin-navbar-title span {
+
+  display: block;
+
+  margin-top: 5px;
+
+  color: #e4b34d;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   NAVBAR ADMIN PROFILE
+========================================================= */
+
+.admin-navbar-profile {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+}
+
+
+.admin-profile-icon {
+
+  width: 50px;
+
+  height: 50px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #fffaf3;
+
+  border:
+    1px solid #d4a72c;
+
+  color: #5d4037;
+
+  font-size: 21px;
+
+}
+
+
+.admin-profile-text {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.admin-profile-text strong {
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+}
+
+
+.admin-profile-text span {
+
+  color: #e4d5c9;
+
+  font-size: 12px;
+
+}
+
+
+/* =========================================================
+   SMALL LOGOUT BUTTON
+   ONLY NEW CHANGE
+========================================================= */
+
+.admin-logout-button {
+
+  height: 38px;
+
+  padding:
+    0 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.28);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.10);
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+
+.admin-logout-button svg {
+
+  font-size: 13px;
+
+  color: #e4b34d;
+
+}
+
+
+.admin-logout-button:hover {
+
+  background:
+    rgba(212, 167, 44, 0.18);
+
+  border-color:
+    #d4a72c;
+
+  transform:
+    translateY(-1px);
+
+}
+
+
+.admin-logout-button:active {
+
+  transform:
+    translateY(0);
+
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD
+========================================================= */
+
+.dashboard {
+
+  width: 100%;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding:
+    48px 60px 70px;
+
+}
+
+
+/* =========================================================
+   DASHBOARD INTRO
+========================================================= */
+
+.dashboard-intro {
+
+  margin-bottom: 48px;
+
+}
+
+
+.section-label {
+
+  display: block;
+
+  color: #b77914;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 8px;
+
+}
+
+
+.dashboard-intro h1 {
+
+  color: #4b2b20;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 42px;
+
+  font-weight: 900;
+
+  margin-bottom: 10px;
+
+}
+
+
+.dashboard-intro p {
+
+  color: #76665d;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+}
+
+
+.intro-line {
+
+  width: 100%;
+
+  height: 1px;
+
+  margin-top: 24px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #d4a72c,
+      #eadfd3,
+      transparent
+    );
+
+}
+
+
+/* =========================================================
+   SUMMARY GRID
+========================================================= */
+
+.summary-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 22px;
+
+  margin-bottom: 55px;
+
+}
+
+
+/* =========================================================
+   SUMMARY CARD
+========================================================= */
+
+.summary-card {
+
+  min-height: 125px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 17px;
+
+  padding: 22px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #eadfd4;
+
+  border-radius: 17px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 9px 25px
+    rgba(73, 48, 35, 0.08);
+
+  transition:
+    0.25s ease;
+
+}
+
+
+.summary-card:hover {
+
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 15px 32px
+    rgba(73, 48, 35, 0.14);
+
+  border-color:
+    #e2c27b;
+
+}
+
+
+/* =========================================================
+   SUMMARY ICON
+========================================================= */
+
+.summary-icon {
+
+  width: 57px;
+
+  height: 57px;
+
+  flex-shrink: 0;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 23px;
+
+}
+
+
+.products-icon {
+
+  background: #fff3d9;
+
+  color: #b77914;
+
+}
+
+
+.brands-icon {
+
+  background: #f4e6df;
+
+  color: #70483b;
+
+}
+
+
+.customers-icon {
+
+  background: #eee9e5;
+
+  color: #5d4037;
+
+}
+
+
+.orders-icon {
+
+  background: #f9ecd2;
+
+  color: #a06c18;
+
+}
+
+
+/* =========================================================
+   SUMMARY CONTENT
+========================================================= */
+
+.summary-content {
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+}
+
+
+.summary-content span {
+
+  color: #6d625b;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+
+.summary-content strong {
+
+  color: #3e2723;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 24px;
+
+  margin-top: 3px;
+
+}
+
+
+.summary-content small {
+
+  color: #8a7b71;
+
+  font-size: 11px;
+
+  margin-top: 2px;
+
+}
+
+
+/* =========================================================
+   MANAGEMENT SECTION
+========================================================= */
+
+.management-section {
+
+  width: 100%;
+
+}
+
+
+.management-heading {
+
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 25px;
+
+  margin-bottom: 27px;
+
+}
+
+
+.management-heading h2 {
+
+  color: #4b2b20;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 31px;
+
+  font-weight: 900;
+
+}
+
+
+.management-line {
+
+  flex: 1;
+
+  height: 1px;
+
+  margin-bottom: 7px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #d4a72c,
+      #eadfd3
+    );
+
+}
+
+
+/* =========================================================
+   MANAGEMENT GRID
+========================================================= */
+
+.management-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 24px;
+
+}
+
+
+/* =========================================================
+   MANAGEMENT CARD
+========================================================= */
+
+.management-card {
+
+  min-height: 245px;
+
+  padding: 27px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #eadfd4;
+
+  border-radius: 18px;
+
+  text-decoration: none;
+
+  color: inherit;
+
+  text-align: left;
+
+  box-shadow:
+    0 9px 27px
+    rgba(73, 48, 35, 0.08);
+
+  transition:
+    0.28s ease;
+
+  position: relative;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+}
+
+
+.management-card::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 100px;
+
+  height: 100px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(212, 167, 44, 0.05);
+
+  right: -35px;
+
+  bottom: -40px;
+
+}
+
+
+.management-card:hover {
+
+  transform:
+    translateY(-7px);
+
+  border-color:
+    #d9b35f;
+
+  box-shadow:
+    0 17px 36px
+    rgba(73, 48, 35, 0.15);
+
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.management-card-top {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 21px;
+
+}
+
+
+.management-icon {
+
+  width: 59px;
+
+  height: 59px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffaf0,
+      #f8ead4
+    );
+
+  border:
+    1px solid #e4c477;
+
+  color: #5d4037;
+
+  font-size: 23px;
+
+}
+
+
+.management-arrow {
+
+  color: #c58a18;
+
+  font-size: 18px;
+
+  transition:
+    0.25s ease;
+
+}
+
+
+.management-card:hover .management-arrow {
+
+  transform:
+    translateX(6px);
+
+}
+
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
+.management-card h3 {
+
+  color: #4b2b20;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 27px;
+
+  font-weight: 900;
+
+  margin-bottom: 8px;
+
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+========================================================= */
+
+.management-card p {
+
+  color: #766b64;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  max-width: 390px;
+
+}
+
+
+/* =========================================================
+   MANAGE LINK
+========================================================= */
+
+.manage-link {
+
+  display: inline-block;
+
+  margin-top: 20px;
+
+  color: #ae7412;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.4px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+
+  .admin-navbar {
+
+    padding:
+      14px 35px;
+
+  }
+
+
+  .dashboard {
+
+    padding:
+      40px 35px 60px;
+
+  }
+
+
+  .summary-grid {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+  }
+
+
+  .management-grid {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .admin-navbar {
+
+    padding:
+      13px 20px;
+
+  }
+
+
+  .admin-navbar-title h2 {
+
+    font-size: 20px;
+
+  }
+
+
+  .admin-navbar-title span {
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .admin-navbar-logo {
+
+    width: 52px;
+
+    height: 52px;
+
+    font-size: 22px;
+
+  }
+
+
+  .admin-profile-text {
+
+    display: none;
+
+  }
+
+
+  .admin-logout-button {
+
+    height: 35px;
+
+    padding:
+      0 10px;
+
+    font-size: 11px;
+
+  }
+
+
+  .admin-logout-button span {
+
+    display: none;
+
+  }
+
+
+  .admin-logout-button svg {
+
+    font-size: 14px;
+
+  }
+
+
+  .dashboard {
+
+    padding:
+      35px 20px 50px;
+
+  }
+
+
+  .dashboard-intro h1 {
+
+    font-size: 32px;
+
+  }
+
+
+  .summary-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .management-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .management-heading {
+
+    display: block;
+
+  }
+
+
+  .management-line {
+
+    margin-top: 12px;
+
+  }
+
+}
+
+
+@media (max-width: 450px) {
+
+  .admin-navbar {
+
+    min-height: 80px;
+
+  }
+
+
+  .admin-navbar-title h2 {
+
+    font-size: 16px;
+
+  }
+
+
+  .admin-navbar-title span {
+
+    font-size: 9px;
+
+  }
+
+
+  .admin-navbar-logo {
+
+    width: 46px;
+
+    height: 46px;
+
+  }
+
+
+  .admin-profile-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+  }
+
+
+  .admin-logout-button {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+  }
+
+
+  .dashboard-intro h1 {
+
+    font-size: 28px;
+
+  }
+
+
+  .management-card {
+
+    padding: 22px;
+
+  }
+
+}

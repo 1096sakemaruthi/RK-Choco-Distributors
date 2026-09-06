@@ -1,0 +1,450 @@
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  width: 100%;
+  height: 102px;
+
+  background: #168be3;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 4%;
+
+  position: relative;
+  z-index: 1000;
+
+  box-sizing: border-box;
+
+  border-bottom: 3px solid #ffbd25;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================
+   LEFT BRAND
+========================= */
+
+.navbar-brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.navbar-brand img {
+  width: 72px;
+  height: 72px;
+
+  object-fit: contain;
+
+  background: white;
+
+  padding: 5px;
+
+  box-sizing: border-box;
+
+  border-radius: 4px;
+}
+
+
+/* =========================
+   BRAND TEXT
+========================= */
+
+.brand-text {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+.brand-text h2 {
+  margin: 0;
+
+  color: white;
+
+  font-size: 36px;
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+.brand-text p {
+  margin: 7px 0 0;
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+/* =========================
+   RIGHT MENU
+========================= */
+
+.navbar-menu {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 18px;
+
+  margin-left: auto;
+}
+
+
+/* =========================
+   NORMAL MENU LINKS
+========================= */
+
+.nav-link {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: 0.25s ease;
+}
+
+
+.nav-link svg {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+
+.nav-link:hover {
+  transform: translateY(-2px);
+
+  opacity: 0.8;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-btn {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 23px;
+
+  background: white;
+
+  color: #168be3 !important;
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: 0.25s ease;
+}
+
+
+.login-btn svg {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+
+.login-btn:hover {
+  background: #f5f9ff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   REGISTER
+========================= */
+
+.register-btn {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 23px;
+
+  background: #ffbd25;
+
+  color: #513322 !important;
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: 0.25s ease;
+}
+
+
+.register-btn svg {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+
+.register-btn:hover {
+  background: #ffc83d;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   CUSTOMER PROFILE
+========================= */
+
+.profile-btn {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 23px;
+
+  background: #ffffff;
+
+  color: #168be3 !important;
+
+  text-decoration: none;
+
+  font-size: 17px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  transition: 0.25s ease;
+
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.10);
+}
+
+
+.profile-btn svg {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+
+.profile-btn:hover {
+  background: #f5f9ff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+
+  .navbar {
+    height: 98px;
+
+    padding: 0 2%;
+  }
+
+
+  .navbar-menu {
+    gap: 13px;
+  }
+
+
+  .nav-link,
+  .login-btn,
+  .register-btn,
+  .profile-btn {
+    font-size: 16px;
+  }
+
+
+  .nav-link svg,
+  .login-btn svg,
+  .register-btn svg,
+  .profile-btn svg {
+    width: 16px;
+    height: 16px;
+
+    font-size: 16px;
+  }
+
+
+  .navbar-brand img {
+    width: 66px;
+    height: 66px;
+  }
+
+
+  .brand-text h2 {
+    font-size: 31px;
+  }
+
+
+  .brand-text p {
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+  .navbar {
+    height: auto;
+
+    padding: 15px 18px;
+
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+
+  .navbar-menu {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+  }
+
+
+  .navbar-brand img {
+    width: 62px;
+    height: 62px;
+  }
+
+
+  .brand-text h2 {
+    font-size: 28px;
+  }
+
+
+  .brand-text p {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+  .navbar-menu {
+    gap: 8px;
+  }
+
+
+  .nav-link,
+  .login-btn,
+  .register-btn,
+  .profile-btn {
+    font-size: 14px;
+  }
+
+
+  .login-btn,
+  .register-btn,
+  .profile-btn {
+    height: 40px;
+
+    padding: 0 13px;
+  }
+
+}

@@ -1,0 +1,750 @@
+/* =========================================================
+   BRANDS PAGE
+========================================================= */
+
+.brands-page {
+  width: 100%;
+
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      180deg,
+      #1268b3 0%,
+      #168fe5 22%,
+      #f5fbff 50%,
+      #ffffff 65%,
+      #fffaf0 82%,
+      #f5ead8 100%
+    );
+
+  padding-bottom: 60px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.brands-page-header {
+  position: relative;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #1268b3 0%,
+      #168fe5 100%
+    );
+
+  padding: 30px 20px 25px;
+
+  border-bottom:
+    2px solid #d4a72c;
+
+  box-shadow:
+    0 6px 18px
+    rgba(20, 75, 110, 0.15);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BACK HOME
+========================================================= */
+
+.brands-back-home {
+  position: absolute;
+
+  left: 25px;
+
+  top: 25px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  transition: 0.2s ease;
+}
+
+
+.brands-back-home:hover {
+  color: #fff3c4;
+
+  transform:
+    translateX(3px);
+}
+
+
+/* =========================================================
+   SMALL TITLE
+========================================================= */
+
+.brands-small-title {
+  display: block;
+
+  color: #ffe39a;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 4px;
+
+  margin-bottom: 6px;
+}
+
+
+/* =========================================================
+   HEADER TITLE
+========================================================= */
+
+.brands-page-header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 33px;
+
+  font-weight: 900;
+}
+
+
+.brands-page-header p {
+  margin: 7px 0 0;
+
+  color: #eaf6ff;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.brands-intro {
+  width: 92%;
+
+  max-width: 1100px;
+
+  margin: 28px auto 20px;
+
+  text-align: center;
+}
+
+
+.brands-intro h2 {
+  margin: 0;
+
+  color: #26384a;
+
+  font-size: 25px;
+
+  font-weight: 900;
+}
+
+
+.brands-intro p {
+  margin: 8px auto 0;
+
+  max-width: 650px;
+
+  color: #718092;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   PRODUCTS CONTAINER
+========================================================= */
+
+.brands-products-container {
+  width: 92%;
+
+  max-width: 1250px;
+
+  margin: 25px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 16px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+.brand-product-card {
+  min-width: 0;
+
+  background: #ffffff;
+
+  border:
+    1px solid #dceaf4;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 7px 20px
+    rgba(20, 75, 110, 0.10);
+
+  display: flex;
+
+  flex-direction: column;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.brand-product-card:hover {
+  transform:
+    translateY(-5px);
+
+  border-color: #168fe5;
+
+  box-shadow:
+    0 13px 28px
+    rgba(22, 143, 229, 0.16);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.brand-product-image-box {
+  width: 100%;
+
+  height: 175px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f5fbff
+    );
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+
+.brand-product-image {
+  width: 95%;
+
+  height: 155px;
+
+  max-width: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  display: block;
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.brand-product-card:hover
+.brand-product-image {
+  transform:
+    scale(1.06);
+}
+
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
+.brand-product-info {
+  padding: 15px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  flex: 1;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BRAND NAME
+========================================================= */
+
+.brand-product-name {
+  width: fit-content;
+
+  padding: 4px 9px;
+
+  border-radius: 12px;
+
+  background: #eaf6ff;
+
+  color: #168fe5;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+.brand-product-info h2 {
+  margin: 0;
+
+  color: #26384a;
+
+  font-size: 16px;
+
+  line-height: 1.25;
+
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.brand-product-info p {
+  margin: 8px 0 14px;
+
+  color: #718092;
+
+  font-size: 11px;
+
+  line-height: 1.55;
+
+  min-height: 52px;
+}
+
+
+/* =========================================================
+   DETAILS BUTTON
+========================================================= */
+
+.brand-details-button {
+  width: 100%;
+
+  height: 34px;
+
+  margin-top: auto;
+
+  border:
+    1px solid #168fe5;
+
+  border-radius: 8px;
+
+  background: #f5fbff;
+
+  color: #168fe5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.brand-details-button:hover {
+  background: #168fe5;
+
+  color: #ffffff;
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================================
+   DETAILS MODAL OVERLAY
+========================================================= */
+
+.brand-details-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(
+      18,
+      74,
+      115,
+      0.55
+    );
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DETAILS MODAL
+========================================================= */
+
+.brand-details-modal {
+  width: min(
+    420px,
+    100%
+  );
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 28px;
+
+  position: relative;
+
+  text-align: center;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.25);
+
+  animation:
+    brandModalOpen
+    0.2s ease;
+}
+
+
+@keyframes brandModalOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   TOP RIGHT CLOSE
+========================================================= */
+
+.brand-modal-close {
+  position: absolute;
+
+  top: 12px;
+
+  right: 12px;
+
+  width: 32px;
+
+  height: 32px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #eaf6ff;
+
+  color: #168fe5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.brand-modal-close:hover {
+  background: #168fe5;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   MODAL IMAGE
+========================================================= */
+
+.brand-modal-image {
+  width: 210px;
+
+  height: 140px;
+
+  object-fit: contain;
+
+  display: block;
+
+  margin:
+    5px auto
+    12px;
+}
+
+
+/* =========================================================
+   MODAL BRAND
+========================================================= */
+
+.brand-modal-brand {
+  display: inline-block;
+
+  color: #168fe5;
+
+  background: #eaf6ff;
+
+  padding: 4px 10px;
+
+  border-radius: 15px;
+
+  font-size: 10px;
+
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   MODAL TITLE
+========================================================= */
+
+.brand-details-modal h2 {
+  margin:
+    9px 0;
+
+  color: #26384a;
+
+  font-size: 24px;
+
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   MODAL DESCRIPTION
+========================================================= */
+
+.brand-details-modal p {
+  max-width: 330px;
+
+  margin:
+    0 auto
+    18px;
+
+  color: #718092;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   BUY PRODUCT BUTTON
+========================================================= */
+
+.brand-modal-buy-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  height: 40px;
+
+  padding:
+    0 24px;
+
+  border: none;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1268b3,
+      #168fe5
+    );
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+
+.brand-modal-buy-button:hover {
+  background:
+    linear-gradient(
+      90deg,
+      #0d5b9c,
+      #087dcc
+    );
+
+  transform:
+    translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .brands-products-container {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .brands-products-container {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 550px) {
+
+  .brands-page-header {
+    padding:
+      24px 15px 20px;
+  }
+
+
+  .brands-page-header h1 {
+    font-size: 28px;
+  }
+
+
+  .brands-back-home {
+    position: static;
+
+    display: flex;
+
+    width: fit-content;
+
+    margin-bottom: 14px;
+
+    margin-left: 5px;
+  }
+
+
+  .brands-products-container {
+    width: 94%;
+
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .brand-product-image-box {
+    height: 190px;
+  }
+
+
+  .brand-product-image {
+    height: 170px;
+  }
+
+
+  .brands-intro {
+    width: 94%;
+  }
+
+}

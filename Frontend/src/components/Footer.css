@@ -1,0 +1,373 @@
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+  width: 100%;
+
+  background: #0b78c8;
+
+  color: white;
+
+  padding: 38px 6% 18px;
+
+  box-sizing: border-box;
+
+  border-top: 3px solid #ffbd25;
+}
+
+
+/* =========================================
+   FOOTER CONTAINER
+========================================= */
+
+.footer-container {
+  width: 100%;
+
+  max-width: 1150px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    1.5fr 1fr 1fr 1.3fr;
+
+  gap: 35px;
+}
+
+
+/* =========================================
+   COMPANY
+========================================= */
+
+.footer-brand h2 {
+  margin: 0 0 7px;
+
+  color: #ffbd25;
+
+  font-size: 24px;
+
+  font-weight: 900;
+}
+
+
+.footer-tagline {
+  margin: 0;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+
+.footer-description {
+  max-width: 260px;
+
+  margin: 9px 0 0;
+
+  color: #eaf6ff;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   SOCIAL ICONS
+========================================= */
+
+.footer-social {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+
+.footer-social a {
+  width: 36px;
+
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: white;
+
+  color: #0b78c8;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, 0.18);
+
+  transition: 0.25s ease;
+}
+
+
+.footer-social a:hover {
+  background: #ffbd25;
+
+  color: #513322;
+
+  transform:
+    translateY(-4px)
+    scale(1.05);
+}
+
+
+.footer-social svg {
+  font-size: 15px;
+}
+
+
+/* =========================================
+   COLUMNS
+========================================= */
+
+.footer-column h3 {
+  margin: 0 0 14px;
+
+  color: #ffbd25;
+
+  font-size: 16px;
+
+  font-weight: 900;
+}
+
+
+/* =========================================
+   ALL LINKS
+========================================= */
+
+.footer-column a {
+  width: fit-content;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 10px;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+
+.footer-column a svg {
+  flex-shrink: 0;
+
+  color: #ffbd25;
+
+  font-size: 14px;
+}
+
+
+.footer-column a:hover {
+  color: #ffbd25;
+
+  transform: translateX(4px);
+}
+
+
+.footer-column a:hover svg {
+  color: white;
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.footer-contact p {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin: 0 0 11px;
+
+  color: white;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+
+/* PHONE / CONTACT ICONS */
+
+.footer-contact p svg {
+  flex-shrink: 0;
+
+  color: #ffbd25;
+
+  font-size: 16px;
+}
+
+
+/* =========================================
+   FOOTER BOTTOM
+========================================= */
+
+.footer-bottom {
+  width: 100%;
+
+  max-width: 1150px;
+
+  margin: 25px auto 0;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+
+.footer-bottom p {
+  margin: 0;
+
+  color: #eaf6ff;
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   EXPLORE PRODUCTS
+========================================= */
+
+.footer-bottom a {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #ffbd25;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  transition: 0.2s ease;
+}
+
+
+.footer-bottom a:hover {
+  color: white;
+
+  gap: 10px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+  .footer {
+    padding:
+      32px 5% 18px;
+  }
+
+  .footer-container {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 28px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+  .footer {
+    padding:
+      30px 20px 16px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+
+    gap: 24px;
+
+    text-align: center;
+  }
+
+  .footer-brand,
+  .footer-column {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .footer-description {
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+  .footer-column a {
+    width: auto;
+
+    justify-content: center;
+  }
+
+  .footer-contact p {
+    justify-content: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+  }
+}
