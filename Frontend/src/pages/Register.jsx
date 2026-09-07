@@ -155,7 +155,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/customers/register",
+        "https://cdms-backend-80mn.onrender.com/api/customers/register",
         userData
       );
 

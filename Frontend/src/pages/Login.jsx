@@ -117,7 +117,7 @@ function Login() {
 
       if (mobileNumber) {
         const response = await axios.get(
-          `http://localhost:8080/api/customers/mobile/${mobileNumber}`
+          `https://cdms-backend-80mn.onrender.com/api/customers/mobile/${mobileNumber}`
         );
 
         customer = response.data;
@@ -129,7 +129,7 @@ function Login() {
 
       else {
         const response = await axios.get(
-          `http://localhost:8080/api/customers/email/${encodeURIComponent(
+          `https://cdms-backend-80mn.onrender.com/api/customers/email/${encodeURIComponent(
             loginValue
           )}`
         );

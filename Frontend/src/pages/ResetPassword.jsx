@@ -113,7 +113,7 @@ function ResetPassword() {
 
       const response =
         await fetch(
-          "http://localhost:8080/api/customer-password/verify-otp",
+          "https://cdms-backend-80mn.onrender.com/api/customer-password/verify-otp",
           {
             method: "POST",
 
@@ -302,7 +302,7 @@ function ResetPassword() {
 
       const response =
         await fetch(
-          "http://localhost:8080/api/customer-password/reset-password",
+          "https://cdms-backend-80mn.onrender.com/api/customer-password/reset-password",
           {
             method: "POST",
 

@@ -70,7 +70,7 @@ function Orders() {
         // =================================================
 
         const response = await fetch(
-          `http://localhost:8080/api/orders/customer/${encodeURIComponent(
+          `https://cdms-backend-80mn.onrender.com/api/orders/customer/${encodeURIComponent(
             mobileNumber
           )}`
         );
@@ -675,7 +675,7 @@ function Orders() {
 
       const response =
         await fetch(
-          `http://localhost:8080/api/orders/${encodeURIComponent(
+          `https://cdms-backend-80mn.onrender.com/api/orders/${encodeURIComponent(
             orderId
           )}/cancel`,
           {

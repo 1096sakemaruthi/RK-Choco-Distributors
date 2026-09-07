@@ -95,7 +95,7 @@ function ForgotPassword() {
 
       const response =
         await fetch(
-          "http://localhost:8080/api/customer-password/send-otp",
+          "https://cdms-backend-80mn.onrender.com/api/customer-password/send-otp",
           {
             method: "POST",
 

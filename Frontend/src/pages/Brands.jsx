@@ -41,7 +41,7 @@ function Brands() {
         setError("");
 
         const response = await fetch(
-          "http://localhost:8080/api/brands"
+          "https://cdms-backend-80mn.onrender.com/api/brands"
         );
 
         if (!response.ok) {

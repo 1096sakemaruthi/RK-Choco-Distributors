@@ -31,7 +31,7 @@ import "../styles/manageproducts.css";
 // BACKEND API URL
 // =========================================================
 
-const API_URL = "http://localhost:8080/api/products";
+const API_URL = "https://cdms-backend-80mn.onrender.com/api/products";
 
 
 

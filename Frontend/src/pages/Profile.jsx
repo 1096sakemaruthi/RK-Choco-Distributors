@@ -169,7 +169,7 @@ function Profile() {
 
           const response =
             await axios.get(
-              `http://localhost:8080/api/orders/customer/${customer.mobileNumber}`
+              `https://cdms-backend-80mn.onrender.com/api/orders/customer/${customer.mobileNumber}`
             );
 
 
@@ -354,7 +354,7 @@ function Profile() {
 
       const response =
         await axios.put(
-          `http://localhost:8080/api/customers/${customer.customerId}`,
+          `https://cdms-backend-80mn.onrender.com/api/customers/${customer.customerId}`,
           {
             ...customer,
             fullName:

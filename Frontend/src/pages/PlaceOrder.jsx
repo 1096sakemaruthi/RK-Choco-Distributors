@@ -218,10 +218,10 @@ function PlaceOrder() {
          SEND ORDER TO SPRING BOOT
          
          api.js baseURL:
-         http://localhost:8080/api
+         https://cdms-backend-80mn.onrender.com/api
          
          So "/orders" =
-         http://localhost:8080/api/orders
+         https://cdms-backend-80mn.onrender.com/api/orders
       =============================================== */
 
       const response =

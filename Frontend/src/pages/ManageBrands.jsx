@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 import "../styles/managebrands.css";
 
-const API_URL = "http://localhost:8080/api/brands";
+const API_URL = "https://cdms-backend-80mn.onrender.com/api/brands";
 
 function ManageBrands() {
 
