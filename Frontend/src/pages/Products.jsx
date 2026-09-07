@@ -13,7 +13,7 @@ import {
   FaSyncAlt,
 } from "react-icons/fa";
 
-import "../styles/Products.css";
+import "../styles/products.css";
 import api from "../services/api";
 
 /* =====================================================
