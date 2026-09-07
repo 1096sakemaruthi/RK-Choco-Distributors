@@ -6,11 +6,11 @@ A full-stack web application developed for managing chocolate distribution busin
 
 ---
 
-## 📌 Project Overview
+## 📌 About The Project
 
 **RK Choco Distributors** is a Chocolate Distribution Management System developed using **React.js, Spring Boot, and MySQL**.
 
-The system helps customers browse chocolates, place orders, manage their profiles, and track their orders.
+The system provides an easy-to-use platform for customers to browse chocolate products, place orders, manage their profiles, and track their orders.
 
 The Admin Portal allows administrators to manage products, brands, customers, orders, dashboard statistics, and reports.
 
@@ -74,9 +74,9 @@ The Admin Portal allows administrators to manage products, brands, customers, or
 - React Router
 - Axios
 - React Icons
+- JavaScript
 - HTML5
 - CSS3
-- JavaScript
 
 ### Backend
 
@@ -98,29 +98,14 @@ The Admin Portal allows administrators to manage products, brands, customers, or
 ## 🏗️ System Architecture
 
 ```text
-                 ┌─────────────────────┐
-                 │      Customer       │
-                 │       / Admin       │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   React Frontend    │
-                 │       + Vite        │
-                 └──────────┬──────────┘
-                            │
-                       REST API
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   Spring Boot       │
-                 │      Backend        │
-                 └──────────┬──────────┘
-                            │
-                       JPA / Hibernate
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │       MySQL         │
-                 │      Database       │
-                 └─────────────────────┘
+Customer / Admin
+       ↓
+React.js Frontend
+       ↓
+Axios REST API
+       ↓
+Spring Boot Backend
+       ↓
+Spring Data JPA
+       ↓
+MySQL Database
