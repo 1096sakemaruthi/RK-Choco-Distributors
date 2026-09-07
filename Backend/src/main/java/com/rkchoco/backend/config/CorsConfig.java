@@ -11,6 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
+                        "https://cdms-frontend-3bom.onrender.com",
                         "http://localhost:5173",
                         "http://localhost:5174",
                         "http://localhost:5175",
