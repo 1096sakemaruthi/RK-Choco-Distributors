@@ -19,7 +19,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-import "../styles/Reports.css";
+import "../styles/reports.css";
 
 import api from "../services/api";
 

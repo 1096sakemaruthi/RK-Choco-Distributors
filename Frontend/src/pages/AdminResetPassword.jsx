@@ -18,7 +18,7 @@ import {
     FaExclamationCircle
 } from "react-icons/fa";
 
-import "../styles/AdminResetPassword.css";
+import "../styles/adminresetpassword.css";
 
 
 function AdminResetPassword() {
