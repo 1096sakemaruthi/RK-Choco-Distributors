@@ -1,16 +1,126 @@
-# React + Vite
+# 🍫 RK Choco Distributors
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Chocolate Distribution Management System
 
-Currently, two official plugins are available:
+A full-stack web application developed for managing chocolate distribution business operations through a modern Customer Portal and Admin Portal.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📌 Project Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**RK Choco Distributors** is a Chocolate Distribution Management System developed using **React.js, Spring Boot, and MySQL**.
 
-## Expanding the Oxlint configuration
+The system helps customers browse chocolates, place orders, manage their profiles, and track their orders.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The Admin Portal allows administrators to manage products, brands, customers, orders, dashboard statistics, and reports.
+
+---
+
+## ✨ Features
+
+### 👤 Customer Portal
+
+- Customer Registration
+- Customer Login
+- Customer Profile Management
+- Browse Products
+- Browse Brands
+- Shopping Cart
+- Place Orders
+- Order Success
+- View Orders
+- View Order Details
+- Cancel Orders
+- Track Order Status
+- Forgot Password
+- OTP Verification
+- Reset Password
+
+### 🛠️ Admin Portal
+
+- Admin Login
+- Admin Dashboard
+- Dashboard Statistics
+- Product Management
+- Add Products
+- Edit Products
+- Delete Products
+- Brand Management
+- Add Brands
+- Edit Brands
+- Delete Brands
+- Customer Management
+- View Customers
+- Update Customer Information
+- Manage Customer Status
+- Delete Customers
+- Order Management
+- View Orders
+- View Order Details
+- Update Order Status
+- Delete Orders
+- Reports
+- Admin Forgot Password
+- Admin Password Reset
+
+---
+
+## 🧰 Technologies Used
+
+### Frontend
+
+- React.js
+- Vite
+- React Router
+- Axios
+- React Icons
+- HTML5
+- CSS3
+- JavaScript
+
+### Backend
+
+- Java
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Hibernate
+- REST API
+- Maven
+- Spring Mail
+
+### Database
+
+- MySQL
+
+---
+
+## 🏗️ System Architecture
+
+```text
+                 ┌─────────────────────┐
+                 │      Customer       │
+                 │       / Admin       │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   React Frontend    │
+                 │       + Vite        │
+                 └──────────┬──────────┘
+                            │
+                       REST API
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   Spring Boot       │
+                 │      Backend        │
+                 └──────────┬──────────┘
+                            │
+                       JPA / Hibernate
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │       MySQL         │
+                 │      Database       │
+                 └─────────────────────┘
