@@ -80,6 +80,20 @@ function PlaceOrder() {
     setError("");
 
     /* =================================================
+       LOGIN CHECK
+       
+       User must be logged in before placing order.
+    ================================================= */
+
+    const isLoggedIn =
+      localStorage.getItem("isLoggedIn") === "true";
+
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
+    }
+
+    /* =================================================
        VALIDATION
     ================================================= */
 
@@ -216,10 +230,10 @@ function PlaceOrder() {
 
       /* ===============================================
          SEND ORDER TO SPRING BOOT
-         
+
          api.js baseURL:
          https://cdms-backend-80mn.onrender.com/api
-         
+
          So "/orders" =
          https://cdms-backend-80mn.onrender.com/api/orders
       =============================================== */
@@ -244,7 +258,7 @@ function PlaceOrder() {
 
       /* ===============================================
          SUCCESS ORDER DATA
-         
+
          Backend items String ga return chestundi.
          Customer UI kosam original cartItems array
          use chestunnam.
@@ -270,7 +284,7 @@ function PlaceOrder() {
 
       /* ===============================================
          SAVE ALL ORDERS LOCALLY
-         
+
          Existing customer Orders page
          compatibility kosam.
       =============================================== */
