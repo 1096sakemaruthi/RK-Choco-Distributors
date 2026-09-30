@@ -38,6 +38,14 @@ function Reports() {
 
   const [loading, setLoading] = useState(true);
 
+  // =========================================================
+  // CUSTOM DATE RANGE
+  // =========================================================
+
+  const [fromDate, setFromDate] = useState("");
+
+  const [toDate, setToDate] = useState("");
+
 
   // =========================================================
   // LOAD REAL ORDERS FROM SPRING BOOT / MYSQL
@@ -140,16 +148,6 @@ function Reports() {
                 "Pending"
               ).trim();
 
-
-            /*
-             * Backend may use:
-             *
-             * Order Received
-             *
-             * Reports UI uses:
-             *
-             * Pending
-             */
 
             if (
               status.toLowerCase() ===
@@ -300,6 +298,68 @@ function Reports() {
 
   const periodOrders = useMemo(() => {
 
+    // =======================================================
+    // CUSTOM FROM / TO DATE FILTER
+    // =======================================================
+
+    if (fromDate || toDate) {
+
+      const from =
+        fromDate
+          ? new Date(`${fromDate}T00:00:00`)
+          : null;
+
+
+      const to =
+        toDate
+          ? new Date(`${toDate}T23:59:59`)
+          : null;
+
+
+      return orders.filter((order) => {
+
+        const orderDate =
+          getOrderDate(order.date);
+
+
+        if (!orderDate) {
+
+          return false;
+
+        }
+
+
+        if (
+          from &&
+          orderDate < from
+        ) {
+
+          return false;
+
+        }
+
+
+        if (
+          to &&
+          orderDate > to
+        ) {
+
+          return false;
+
+        }
+
+
+        return true;
+
+      });
+
+    }
+
+
+    // =======================================================
+    // EXISTING PERIOD FILTER
+    // =======================================================
+
     if (period === "All Time") {
 
       return orders;
@@ -413,6 +473,8 @@ function Reports() {
   }, [
     orders,
     period,
+    fromDate,
+    toDate,
   ]);
 
 
@@ -467,6 +529,46 @@ function Reports() {
       periodOrders,
       search,
     ]);
+
+
+  // =========================================================
+  // DATE RANGE HANDLERS
+  // =========================================================
+
+  const handleFromDateChange = (e) => {
+
+    const value =
+      e.target.value;
+
+
+    setFromDate(value);
+
+
+    if (value) {
+
+      setPeriod("Custom Range");
+
+    }
+
+  };
+
+
+  const handleToDateChange = (e) => {
+
+    const value =
+      e.target.value;
+
+
+    setToDate(value);
+
+
+    if (value) {
+
+      setPeriod("Custom Range");
+
+    }
+
+  };
 
 
   // =========================================================
@@ -869,6 +971,16 @@ function Reports() {
 
 
   // =========================================================
+  // DISPLAY PERIOD
+  // =========================================================
+
+  const displayPeriod =
+    fromDate || toDate
+      ? `${fromDate || "Start"} → ${toDate || "End"}`
+      : period;
+
+
+  // =========================================================
   // EXPORT REPORT
   // =========================================================
 
@@ -1092,15 +1204,23 @@ function Reports() {
                 <button
                   key={item}
                   className={
-                    period === item
+                    period === item &&
+                    !fromDate &&
+                    !toDate
                       ? "active"
                       : ""
                   }
-                  onClick={() =>
+                  onClick={() => {
+
                     setPeriod(
                       item
-                    )
-                  }
+                    );
+
+                    setFromDate("");
+
+                    setToDate("");
+
+                  }}
                 >
 
                   {item}
@@ -1110,6 +1230,88 @@ function Reports() {
               )
             )}
 
+
+          </div>
+
+
+        </div>
+
+
+        {/* ===================================================
+            CUSTOM DATE RANGE
+        =================================================== */}
+
+        <div className="custom-date-range">
+
+
+          <div className="custom-date-title">
+
+            <FaCalendarAlt />
+
+            <div>
+
+              <span>
+                CUSTOM DATE RANGE
+              </span>
+
+              <strong>
+                Select From & To Dates
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div className="custom-date-fields">
+
+
+            <label className="custom-date-field">
+
+              <span>
+                From Date
+              </span>
+
+              <div className="date-input-wrapper">
+
+                <FaCalendarAlt />
+
+                <input
+                  type="date"
+                  value={fromDate}
+                  max={toDate || undefined}
+                  onChange={
+                    handleFromDateChange
+                  }
+                />
+
+              </div>
+
+            </label>
+
+
+            <label className="custom-date-field">
+
+              <span>
+                To Date
+              </span>
+
+              <div className="date-input-wrapper">
+
+                <FaCalendarAlt />
+
+                <input
+                  type="date"
+                  value={toDate}
+                  min={fromDate || undefined}
+                  onChange={
+                    handleToDateChange
+                  }
+                />
+
+              </div>
+
+            </label>
 
           </div>
 
@@ -1521,7 +1723,7 @@ function Reports() {
 
               <span>
 
-                {period}
+                {displayPeriod}
 
               </span>
 

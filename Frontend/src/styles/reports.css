@@ -101,7 +101,6 @@
 
 /* =========================================================
    BACK DASHBOARD
-   ONLY THIS SECTION CHANGED
 ========================================================= */
 
 .reports-page .reports-back-dashboard {
@@ -368,6 +367,198 @@
   border-color: #5d4037;
 
   color: #ffffff;
+}
+
+
+/* =========================================================
+   CUSTOM DATE RANGE
+   NEW FEATURE ONLY
+========================================================= */
+
+.reports-page .custom-date-range {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 35px;
+
+  padding: 20px 22px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #eadfd3;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 20px
+    rgba(93, 64, 55, 0.06);
+}
+
+
+.reports-page .custom-date-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 230px;
+
+  color: #a06d16;
+}
+
+
+.reports-page .custom-date-title > svg {
+  width: 42px;
+  height: 42px;
+
+  padding: 11px;
+
+  box-sizing: border-box;
+
+  border-radius: 11px;
+
+  background: #fff4df;
+
+  color: #b77711;
+
+  flex-shrink: 0;
+}
+
+
+.reports-page .custom-date-title div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.reports-page .custom-date-title span {
+  color: #c18a1d;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+}
+
+
+.reports-page .custom-date-title strong {
+  color: #4b2b20;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 17px;
+}
+
+
+.reports-page .custom-date-fields {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  flex: 1;
+
+  justify-content: flex-end;
+}
+
+
+.reports-page .custom-date-field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  min-width: 190px;
+}
+
+
+.reports-page .custom-date-field > span {
+  color: #6d625b;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.8px;
+}
+
+
+.reports-page .date-input-wrapper {
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 12px;
+
+  background: #fffaf5;
+
+  border:
+    1px solid #ddd2c8;
+
+  border-radius: 9px;
+
+  color: #8a6424;
+
+  transition: 0.2s ease;
+}
+
+
+.reports-page .date-input-wrapper:focus-within {
+  border-color: #c7922d;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(199, 146, 45, 0.09);
+}
+
+
+.reports-page .date-input-wrapper input {
+  width: 100%;
+
+  height: 100%;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #4b2b20;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.reports-page .date-input-wrapper input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+
+  opacity: 0.8;
 }
 
 
@@ -738,7 +929,7 @@
 
 
 .reports-page .report-date {
-  height: 48px;
+  min-height: 48px;
 
   display: flex;
 
@@ -1306,6 +1497,20 @@
       repeat(2, 1fr);
   }
 
+
+  .reports-page .custom-date-range {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .reports-page .custom-date-fields {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+
 }
 
 
@@ -1333,6 +1538,18 @@
   .reports-page .lower-report-grid {
     grid-template-columns:
       1fr;
+  }
+
+
+  .reports-page .custom-date-fields {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+
+  .reports-page .custom-date-field {
+    width: 100%;
   }
 
 }
@@ -1410,6 +1627,16 @@
     align-items: flex-start;
   }
 
+
+  .reports-page .custom-date-range {
+    padding: 18px;
+  }
+
+
+  .reports-page .custom-date-title {
+    min-width: 0;
+  }
+
 }
 
 
@@ -1423,6 +1650,11 @@
   .reports-page .best-products-card,
   .reports-page .brand-sales-card {
     padding: 20px;
+  }
+
+
+  .reports-page .custom-date-fields {
+    width: 100%;
   }
 
 }

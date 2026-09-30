@@ -44,6 +44,12 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 // =================================================
+// ADMIN PROTECTED ROUTE
+// =================================================
+
+import AdminProtectedRoute from "./routes/AdminProtectedRoute";
+
+// =================================================
 // APP
 // =================================================
 
@@ -226,63 +232,71 @@ function App() {
 
 
       {/* =================================================
-          ADMIN DASHBOARD
+          PROTECTED ADMIN ROUTES
       ================================================= */}
 
-      <Route
-        path="/admin-dashboard"
-        element={<AdminDashboard />}
-      />
+      <Route element={<AdminProtectedRoute />}>
+
+        {/* =================================================
+            ADMIN DASHBOARD
+        ================================================= */}
+
+        <Route
+          path="/admin-dashboard"
+          element={<AdminDashboard />}
+        />
 
 
-      {/* =================================================
-          ADMIN MANAGE PRODUCTS
-      ================================================= */}
+        {/* =================================================
+            ADMIN MANAGE PRODUCTS
+        ================================================= */}
 
-      <Route
-        path="/manage-products"
-        element={<ManageProducts />}
-      />
-
-
-      {/* =================================================
-          ADMIN MANAGE BRANDS
-      ================================================= */}
-
-      <Route
-        path="/manage-brands"
-        element={<ManageBrands />}
-      />
+        <Route
+          path="/manage-products"
+          element={<ManageProducts />}
+        />
 
 
-      {/* =================================================
-          ADMIN MANAGE CUSTOMERS
-      ================================================= */}
+        {/* =================================================
+            ADMIN MANAGE BRANDS
+        ================================================= */}
 
-      <Route
-        path="/manage-customers"
-        element={<ManageCustomers />}
-      />
-
-
-      {/* =================================================
-          ADMIN MANAGE ORDERS
-      ================================================= */}
-
-      <Route
-        path="/manage-orders"
-        element={<ManageOrders />}
-      />
+        <Route
+          path="/manage-brands"
+          element={<ManageBrands />}
+        />
 
 
-      {/* =================================================
-          ADMIN REPORTS
-      ================================================= */}
+        {/* =================================================
+            ADMIN MANAGE CUSTOMERS
+        ================================================= */}
 
-      <Route
-        path="/reports"
-        element={<Reports />}
-      />
+        <Route
+          path="/manage-customers"
+          element={<ManageCustomers />}
+        />
+
+
+        {/* =================================================
+            ADMIN MANAGE ORDERS
+        ================================================= */}
+
+        <Route
+          path="/manage-orders"
+          element={<ManageOrders />}
+        />
+
+
+        {/* =================================================
+            ADMIN REPORTS
+        ================================================= */}
+
+        <Route
+          path="/reports"
+          element={<Reports />}
+        />
+
+      </Route>
 
     </Routes>
   );
