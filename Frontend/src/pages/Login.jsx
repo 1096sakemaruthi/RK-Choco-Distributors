@@ -143,7 +143,7 @@ function Login() {
 
       if (err.response && err.response.status === 404) {
         setLoginError(
-          "Incorrect email/mobile number or password. Please try again."
+          "User not registered. Please go to Register and create an account."
         );
       } else {
         setLoginError(
@@ -160,7 +160,7 @@ function Login() {
 
     if (!customer) {
       setLoginError(
-        "Incorrect email/mobile number or password. Please try again."
+        "User not registered. Please go to Register and create an account."
       );
 
       return;
@@ -263,20 +263,17 @@ function Login() {
 
       <div className="login-bg-circle login-circle-two"></div>
 
-
       {/* =================================================
           MAIN CONTENT
       ================================================= */}
 
       <section className="login-content">
 
-
         {/* =================================================
             LEFT SIDE
         ================================================= */}
 
         <div className="login-left">
-
 
           {/* =================================================
               BRAND
@@ -302,13 +299,11 @@ function Login() {
 
           </div>
 
-
           {/* =================================================
               BRAND LINE
           ================================================= */}
 
           <div className="login-brand-line"></div>
-
 
           {/* =================================================
               WELCOME TITLE
@@ -319,7 +314,6 @@ function Login() {
             <br />
             Distribution Network
           </h2>
-
 
           {/* =================================================
               DESCRIPTION
@@ -332,13 +326,11 @@ function Login() {
             services.
           </p>
 
-
           {/* =================================================
               FEATURES
           ================================================= */}
 
           <div className="login-features">
-
 
             {/* FEATURE 1 */}
 
@@ -362,7 +354,6 @@ function Login() {
 
             </div>
 
-
             {/* FEATURE 2 */}
 
             <div className="login-feature-item">
@@ -384,7 +375,6 @@ function Login() {
               </div>
 
             </div>
-
 
             {/* FEATURE 3 */}
 
@@ -410,7 +400,6 @@ function Login() {
 
           </div>
 
-
           {/* =================================================
               BUSINESS NOTE
           ================================================= */}
@@ -427,20 +416,17 @@ function Login() {
 
         </div>
 
-
         {/* =================================================
             LOGIN CARD
         ================================================= */}
 
         <section className="login-box">
 
-
           {/* =================================================
               TOP CARD LINE
           ================================================= */}
 
           <div className="login-card-top"></div>
-
 
           {/* =================================================
               LOGIN TITLE
@@ -462,7 +448,6 @@ function Login() {
 
           </div>
 
-
           {/* =================================================
               ERROR MESSAGE
           ================================================= */}
@@ -478,7 +463,6 @@ function Login() {
 
             </div>
           )}
-
 
           {/* =================================================
               EMAIL OR MOBILE NUMBER
@@ -500,7 +484,6 @@ function Login() {
             />
 
           </div>
-
 
           {/* =================================================
               PASSWORD
@@ -548,7 +531,6 @@ function Login() {
 
           </div>
 
-
           {/* =================================================
               FORGOT PASSWORD
           ================================================= */}
@@ -560,7 +542,6 @@ function Login() {
             </Link>
 
           </div>
-
 
           {/* =================================================
               LOGIN BUTTON
@@ -580,7 +561,6 @@ function Login() {
             <FaArrowRight />
 
           </button>
-
 
           {/* =================================================
               LOGIN SUCCESS MESSAGE
@@ -606,7 +586,6 @@ function Login() {
             </div>
           )}
 
-
           {/* =================================================
               SECURITY
           ================================================= */}
@@ -620,7 +599,6 @@ function Login() {
             </span>
 
           </div>
-
 
           {/* =================================================
               REGISTER LINK
@@ -638,7 +616,6 @@ function Login() {
 
           </div>
 
-
           {/* =================================================
               BACK TO HOME
           ================================================= */}
@@ -655,7 +632,6 @@ function Login() {
             </span>
 
           </Link>
-
 
         </section>
 

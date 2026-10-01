@@ -81,7 +81,7 @@ function PlaceOrder() {
 
     /* =================================================
        LOGIN CHECK
-       
+
        User must be logged in before placing order.
     ================================================= */
 
@@ -89,7 +89,14 @@ function PlaceOrder() {
       localStorage.getItem("isLoggedIn") === "true";
 
     if (!isLoggedIn) {
-      navigate("/login");
+      setError(
+        "Please login or register to continue with your order."
+      );
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2500);
+
       return;
     }
 

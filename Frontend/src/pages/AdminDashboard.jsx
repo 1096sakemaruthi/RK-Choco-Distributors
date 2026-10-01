@@ -96,9 +96,9 @@ function AdminDashboard() {
 
   const handleLogout = () => {
 
-    localStorage.removeItem("adminLoggedIn");
+    sessionStorage.removeItem("adminLoggedIn");
 
-    localStorage.removeItem("loggedInAdmin");
+    sessionStorage.removeItem("loggedInAdmin");
 
     navigate("/admin-login");
 

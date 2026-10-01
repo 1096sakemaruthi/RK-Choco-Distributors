@@ -971,6 +971,51 @@ function Reports() {
 
 
   // =========================================================
+  // FORMAT DATE & TIME FOR EXPORT ONLY
+  // =========================================================
+
+  const formatDateTime =
+    (date) => {
+
+      if (!date) {
+
+        return "—";
+
+      }
+
+
+      const parsedDate =
+        new Date(date);
+
+
+      if (
+        Number.isNaN(
+          parsedDate.getTime()
+        )
+      ) {
+
+        return String(date);
+
+      }
+
+
+      return parsedDate.toLocaleString(
+        "en-IN",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }
+      );
+
+    };
+
+
+  // =========================================================
   // DISPLAY PERIOD
   // =========================================================
 
@@ -1000,14 +1045,14 @@ function Reports() {
 
 
     const header =
-      "Order ID,Customer,Date,Status,Items,Amount\n";
+      "Order ID,Customer,Date & Time,Status,Items,Amount\n";
 
 
     const rows =
       filteredOrders
         .map(
           (order) =>
-            `"${order.id}","${order.customer}","${formatDate(
+            `"${order.id}","${order.customer}","'${formatDateTime(
               order.date
             )}","${order.status}","${
               order.items

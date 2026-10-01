@@ -80,14 +80,14 @@ function AdminLogin() {
 
       const adminData = response.data;
 
-      // Save admin login status
-      localStorage.setItem(
+      // Save admin login status for CURRENT TAB only
+      sessionStorage.setItem(
         "adminLoggedIn",
         "true"
       );
 
-      // Save logged-in admin details
-      localStorage.setItem(
+      // Save logged-in admin details for CURRENT TAB only
+      sessionStorage.setItem(
         "loggedInAdmin",
         JSON.stringify(adminData)
       );
