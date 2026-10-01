@@ -45,6 +45,7 @@ function ManageProducts() {
     id: null,
     name: "",
     brand: "",
+    description: "",
     price: "",
     stock: "",
     image: "",
@@ -340,6 +341,8 @@ function ManageProducts() {
 
       brand: product.brand || "",
 
+      description: product.description || "",
+
       price: product.price ?? "",
 
       stock: product.stock ?? "",
@@ -479,6 +482,8 @@ function ManageProducts() {
       name: form.name,
 
       brand: form.brand,
+
+      description: form.description,
 
       price: Number(form.price),
 
@@ -1332,6 +1337,36 @@ function ManageProducts() {
                   value={form.brand}
                   onChange={handleChange}
                   placeholder="Enter brand name"
+                />
+
+
+
+              </div>
+
+
+
+
+
+              {/* DESCRIPTION */}
+
+              <div className="form-group">
+
+
+
+                <label>
+
+                  Description
+
+                </label>
+
+
+
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  placeholder="Enter product description"
+                  rows="4"
                 />
 
 

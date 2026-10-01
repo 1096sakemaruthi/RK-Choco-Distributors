@@ -19,6 +19,9 @@ public class Product {
 
     private String brand;
 
+    @Lob
+    private String description;
+
     private double price;
 
     private int stock;
@@ -79,6 +82,22 @@ public class Product {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    // =========================================================
+    // GET DESCRIPTION
+    // =========================================================
+
+    public String getDescription() {
+        return description;
+    }
+
+    // =========================================================
+    // SET DESCRIPTION
+    // =========================================================
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     // =========================================================

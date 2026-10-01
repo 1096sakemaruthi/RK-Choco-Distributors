@@ -86,13 +86,14 @@ public class ProductController {
         brand.setName(brandName);
 
         /*
-         * Product currently does not have a
-         * description field.
-         *
-         * Therefore we keep brand description empty
-         * instead of inventing product information.
+         * Use the product description for the
+         * automatically created brand description.
          */
-        brand.setDescription("");
+        brand.setDescription(
+                product.getDescription() == null
+                        ? ""
+                        : product.getDescription()
+        );
 
         /*
          * Use the product image for the automatically
@@ -140,6 +141,10 @@ public class ProductController {
 
                     existingProduct.setBrand(
                             updatedProduct.getBrand()
+                    );
+
+                    existingProduct.setDescription(
+                            updatedProduct.getDescription()
                     );
 
                     existingProduct.setPrice(
