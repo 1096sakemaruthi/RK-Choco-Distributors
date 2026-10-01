@@ -45,35 +45,79 @@ public class DashboardController {
         ProductRepository productRepository,
         CustomerRepository customerRepository
     ) {
-        this.productRepository = productRepository;
-        this.customerRepository = customerRepository;
+        this.productRepository =
+                productRepository;
+
+        this.customerRepository =
+                customerRepository;
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<Map<String, Long>> getDashboardStats() {
+    public ResponseEntity<Map<String, Long>>
+            getDashboardStats() {
 
-        long totalProducts = productRepository.count();
+        long totalProducts =
+                productRepository.count();
 
-        long totalCustomers = customerRepository.count();
+        long totalCustomers =
+                customerRepository.count();
 
-        Long totalOrders = ((Number) entityManager
-            .createNativeQuery("SELECT COUNT(*) FROM orders")
-            .getSingleResult())
-            .longValue();
+        Long totalOrders =
+                ((Number) entityManager
+                    .createNativeQuery(
+                        "SELECT COUNT(*) FROM orders"
+                    )
+                    .getSingleResult())
+                    .longValue();
 
-        Long totalBrands = ((Number) entityManager
-            .createNativeQuery(
-                "SELECT COUNT(DISTINCT brand) FROM product"
-            )
-            .getSingleResult())
-            .longValue();
+        /*
+         * IMPORTANT:
+         *
+         * Correct table name is products.
+         *
+         * Count unique brand names from products.
+         *
+         * Example:
+         *
+         * Dairy Milk -> Cadbury
+         * 5 Star      -> Cadbury
+         * KitKat      -> Nestle
+         *
+         * Total Brands = 2
+         */
+        Long totalBrands =
+                ((Number) entityManager
+                    .createNativeQuery(
+                        "SELECT COUNT(DISTINCT brand) " +
+                        "FROM products " +
+                        "WHERE brand IS NOT NULL " +
+                        "AND TRIM(brand) <> ''"
+                    )
+                    .getSingleResult())
+                    .longValue();
 
-        Map<String, Long> stats = new HashMap<>();
+        Map<String, Long> stats =
+                new HashMap<>();
 
-        stats.put("totalProducts", totalProducts);
-        stats.put("totalCustomers", totalCustomers);
-        stats.put("totalOrders", totalOrders);
-        stats.put("totalBrands", totalBrands);
+        stats.put(
+            "totalProducts",
+            totalProducts
+        );
+
+        stats.put(
+            "totalCustomers",
+            totalCustomers
+        );
+
+        stats.put(
+            "totalOrders",
+            totalOrders
+        );
+
+        stats.put(
+            "totalBrands",
+            totalBrands
+        );
 
         return ResponseEntity.ok(stats);
     }

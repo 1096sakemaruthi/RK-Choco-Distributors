@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
 import { Link } from "react-router-dom";
 
 import {
@@ -10,22 +14,23 @@ import {
 
 import "../styles/Brands.css";
 
-
 /* =====================================================
    BRANDS PAGE
 ===================================================== */
 
 function Brands() {
 
-  const [brandProducts, setBrandProducts] = useState([]);
+  const [brandProducts, setBrandProducts] =
+    useState([]);
 
   const [selectedProduct, setSelectedProduct] =
     useState(null);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
-  const [error, setError] = useState("");
-
+  const [error, setError] =
+    useState("");
 
   /* =====================================================
      LOAD BRANDS FROM BACKEND
@@ -38,21 +43,77 @@ function Brands() {
       try {
 
         setLoading(true);
+
         setError("");
 
-        const response = await fetch(
-          "https://cdms-backend-80mn.onrender.com/api/brands"
-        );
+        const response =
+          await fetch(
+            "https://cdms-backend-80mn.onrender.com/api/brands"
+          );
 
         if (!response.ok) {
+
           throw new Error(
             "Failed to load brands."
           );
+
         }
 
-        const data = await response.json();
+        const data =
+          await response.json();
 
-        setBrandProducts(data);
+        /*
+         * Remove duplicate brand names on the
+         * customer side as an additional safety check.
+         *
+         * Cadbury
+         * cadbury
+         *
+         * will be treated as one brand.
+         */
+        const uniqueBrands = [];
+
+        data.forEach((brand) => {
+
+          if (
+            !brand ||
+            !brand.name
+          ) {
+
+            return;
+
+          }
+
+          const brandName =
+            String(
+              brand.name
+            ).trim();
+
+          const alreadyExists =
+            uniqueBrands.some(
+              (item) =>
+                String(
+                  item.name || ""
+                )
+                  .trim()
+                  .toLowerCase() ===
+                brandName.toLowerCase()
+            );
+
+          if (!alreadyExists) {
+
+            uniqueBrands.push({
+              ...brand,
+              name: brandName,
+            });
+
+          }
+
+        });
+
+        setBrandProducts(
+          uniqueBrands
+        );
 
       } catch (err) {
 
@@ -77,7 +138,6 @@ function Brands() {
 
   }, []);
 
-
   /* =====================================================
      BRANDS PAGE
   ===================================================== */
@@ -85,7 +145,6 @@ function Brands() {
   return (
 
     <main className="brands-page">
-
 
       {/* =================================================
           HEADER
@@ -101,11 +160,9 @@ function Brands() {
           Back to Home
         </Link>
 
-
         <h1>
           Our Chocolate Collection
         </h1>
-
 
         <p>
           Discover delicious chocolates from popular
@@ -114,7 +171,6 @@ function Brands() {
         </p>
 
       </section>
-
 
       {/* =================================================
           LOADING
@@ -132,23 +188,22 @@ function Brands() {
 
       )}
 
-
       {/* =================================================
           ERROR
       ================================================= */}
 
-      {!loading && error && (
+      {!loading &&
+        error && (
 
-        <div className="brands-error">
+          <div className="brands-error">
 
-          <p>
-            {error}
-          </p>
+            <p>
+              {error}
+            </p>
 
-        </div>
+          </div>
 
-      )}
-
+        )}
 
       {/* =================================================
           NO BRANDS
@@ -168,7 +223,6 @@ function Brands() {
 
         )}
 
-
       {/* =================================================
           BRANDS / PRODUCTS
       ================================================= */}
@@ -179,90 +233,93 @@ function Brands() {
 
           <section className="brands-products-container">
 
-            {brandProducts.map((product) => (
+            {brandProducts.map(
+              (product) => (
 
-              <article
-                className="brand-product-card"
-                key={product.id}
-              >
+                <article
+                  className="brand-product-card"
+                  key={product.id}
+                >
 
+                  {/* IMAGE */}
 
-                {/* IMAGE */}
+                  <div className="brand-product-image-box">
 
-                <div className="brand-product-image-box">
+                    {product.image ? (
 
-                  {product.image ? (
+                      <img
+                        src={
+                          product.image
+                        }
+                        alt={
+                          product.name
+                        }
+                        className="brand-product-image"
+                      />
 
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="brand-product-image"
-                    />
+                    ) : (
 
-                  ) : (
+                      <div className="brand-product-no-image">
+                        No Image
+                      </div>
 
-                    <div className="brand-product-no-image">
-                      No Image
-                    </div>
+                    )}
 
-                  )}
+                  </div>
 
-                </div>
+                  {/* INFORMATION */}
 
+                  <div className="brand-product-info">
 
-                {/* INFORMATION */}
+                    <span className="brand-product-name">
 
-                <div className="brand-product-info">
+                      {product.name}
 
+                    </span>
 
-                  <span className="brand-product-name">
+                    <h2>
 
-                    {product.name}
+                      {product.name}
 
-                  </span>
+                    </h2>
 
+                    <p>
 
-                  <h2>
+                      {product.description &&
+                      product.description.trim()
+                        ? product.description
+                        : `Explore ${product.name} chocolates available in our collection.`}
 
-                    {product.name}
+                    </p>
 
-                  </h2>
+                    {/* DETAILS */}
 
+                    <button
+                      type="button"
+                      className="brand-details-button"
+                      onClick={() =>
+                        setSelectedProduct(
+                          product
+                        )
+                      }
+                    >
 
-                  <p>
+                      <FaInfoCircle />
 
-                    {product.description}
+                      Details
 
-                  </p>
+                    </button>
 
+                  </div>
 
-                  {/* DETAILS */}
+                </article>
 
-                  <button
-                    type="button"
-                    className="brand-details-button"
-                    onClick={() =>
-                      setSelectedProduct(product)
-                    }
-                  >
-
-                    <FaInfoCircle />
-
-                    Details
-
-                  </button>
-
-
-                </div>
-
-              </article>
-
-            ))}
+              )
+            )}
 
           </section>
 
         )}
-
 
       {/* =================================================
           DETAILS MODAL
@@ -273,10 +330,11 @@ function Brands() {
         <div
           className="brand-details-overlay"
           onClick={() =>
-            setSelectedProduct(null)
+            setSelectedProduct(
+              null
+            )
           }
         >
-
 
           <div
             className="brand-details-modal"
@@ -284,7 +342,6 @@ function Brands() {
               event.stopPropagation()
             }
           >
-
 
             {/* =================================================
                 TOP RIGHT CLOSE ONLY
@@ -294,7 +351,9 @@ function Brands() {
               type="button"
               className="brand-modal-close"
               onClick={() =>
-                setSelectedProduct(null)
+                setSelectedProduct(
+                  null
+                )
               }
             >
 
@@ -302,19 +361,21 @@ function Brands() {
 
             </button>
 
-
             {/* IMAGE */}
 
             {selectedProduct.image && (
 
               <img
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
+                src={
+                  selectedProduct.image
+                }
+                alt={
+                  selectedProduct.name
+                }
                 className="brand-modal-image"
               />
 
             )}
-
 
             {/* BRAND */}
 
@@ -324,7 +385,6 @@ function Brands() {
 
             </span>
 
-
             {/* NAME */}
 
             <h2>
@@ -333,19 +393,19 @@ function Brands() {
 
             </h2>
 
-
             {/* DESCRIPTION */}
 
             <p>
 
-              {selectedProduct.description}
+              {selectedProduct.description &&
+              selectedProduct.description.trim()
+                ? selectedProduct.description
+                : `Explore ${selectedProduct.name} chocolates available in our collection.`}
 
             </p>
 
-
             {/* =================================================
                 BUY PRODUCT
-                GO TO PRODUCTS PAGE
             ================================================= */}
 
             <Link
@@ -354,7 +414,9 @@ function Brands() {
               )}`}
               className="brand-modal-buy-button"
               onClick={() =>
-                setSelectedProduct(null)
+                setSelectedProduct(
+                  null
+                )
               }
             >
 
@@ -363,7 +425,6 @@ function Brands() {
               Buy Product
 
             </Link>
-
 
           </div>
 
@@ -375,6 +436,5 @@ function Brands() {
 
   );
 }
-
 
 export default Brands;

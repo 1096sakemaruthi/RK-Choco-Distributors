@@ -1,5 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import {
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 import {
   FaArrowLeft,
@@ -61,7 +70,6 @@ const defaultImage = "/images/cadbury.jpg";
 
 /* =====================================================
    GET IMAGE FROM PRODUCT NAME
-   Case-insensitive matching
 ===================================================== */
 
 const getMappedProductImage = (productName) => {
@@ -86,11 +94,10 @@ const getMappedProductImage = (productName) => {
 };
 
 /* =====================================================
-   BRANDS
+   EXISTING DEFAULT BRANDS
 ===================================================== */
 
-const brands = [
-  "All",
+const defaultBrands = [
   "Cadbury",
   "KitKat",
   "5 Star",
@@ -124,117 +131,140 @@ const brands = [
 ===================================================== */
 
 function Products() {
+
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+
+  const [searchParams] =
+    useSearchParams();
 
   /* =====================================================
      STATES
   ===================================================== */
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] =
+    useState([]);
 
-  const [searchText, setSearchText] = useState("");
+  const [backendBrands, setBackendBrands] =
+    useState([]);
+
+  const [searchText, setSearchText] =
+    useState("");
 
   const [selectedBrand, setSelectedBrand] =
     useState("All");
 
-  const [quantities, setQuantities] = useState({});
+  const [quantities, setQuantities] =
+    useState({});
 
   const [selectedProduct, setSelectedProduct] =
     useState(null);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
-  const [error, setError] = useState("");
+  const [error, setError] =
+    useState("");
 
   /* =====================================================
      GET BRAND FROM URL
   ===================================================== */
 
   useEffect(() => {
-    const brandFromUrl = searchParams.get("brand");
+
+    const brandFromUrl =
+      searchParams.get("brand");
 
     if (brandFromUrl) {
-      setSelectedBrand(brandFromUrl);
+
+      setSelectedBrand(
+        brandFromUrl
+      );
+
     } else {
+
       setSelectedBrand("All");
+
     }
+
   }, [searchParams]);
 
   /* =====================================================
-     FETCH PRODUCTS FROM SPRING BOOT
+     FETCH PRODUCTS
   ===================================================== */
 
   const loadProducts = () => {
+
     setLoading(true);
+
     setError("");
 
     api
       .get("/products")
       .then((response) => {
-        const data = response.data;
 
-        const formattedProducts = data.map((product) => {
-          /*
-           * IMPORTANT:
-           *
-           * Admin side lo upload chesina image
-           * database nunchi vachina product.image lo untundi.
-           *
-           * Kabatti first priority:
-           * product.image
-           *
-           * Second priority:
-           * product name based built-in image
-           *
-           * Third priority:
-           * default Dairy Milk image
-           */
+        const data =
+          response.data;
 
-          const backendImage =
-            product.image &&
-            String(product.image).trim() !== ""
-              ? product.image
-              : "";
+        const formattedProducts =
+          data.map((product) => {
 
-          const mappedImage =
-            getMappedProductImage(product.name);
+            const backendImage =
+              product.image &&
+              String(product.image).trim() !== ""
+                ? product.image
+                : "";
 
-          return {
-            ...product,
+            const mappedImage =
+              getMappedProductImage(
+                product.name
+              );
 
-            image:
-              backendImage ||
-              mappedImage ||
-              defaultImage,
+            return {
+              ...product,
 
-            description:
-              product.description ||
-              `${product.name} chocolate from ${product.brand}.`,
+              image:
+                backendImage ||
+                mappedImage ||
+                defaultImage,
 
-            price: Number(product.price) || 0,
+              description:
+                product.description ||
+                `${product.name} chocolate from ${product.brand}.`,
 
-            stock: Number(product.stock) || 0,
-          };
-        });
+              price:
+                Number(product.price) || 0,
 
-        setProducts(formattedProducts);
+              stock:
+                Number(product.stock) || 0,
+            };
 
-        /* =================================================
-           RESET QUANTITIES
-        ================================================= */
+          });
+
+        setProducts(
+          formattedProducts
+        );
 
         const initialQuantities = {};
 
-        formattedProducts.forEach((product) => {
-          initialQuantities[product.id] = 1;
-        });
+        formattedProducts.forEach(
+          (product) => {
 
-        setQuantities(initialQuantities);
+            initialQuantities[
+              product.id
+            ] = 1;
+
+          }
+        );
+
+        setQuantities(
+          initialQuantities
+        );
 
         setLoading(false);
+
       })
       .catch((err) => {
+
         console.error(
           "Error fetching products:",
           err
@@ -245,146 +275,292 @@ function Products() {
         );
 
         setLoading(false);
+
       });
+
   };
 
   /* =====================================================
-     LOAD PRODUCTS
+     LOAD BRANDS
+  ===================================================== */
+
+  const loadBrands = () => {
+
+    api
+      .get("/brands")
+      .then((response) => {
+
+        const data =
+          Array.isArray(response.data)
+            ? response.data
+            : [];
+
+        const names =
+          data
+            .map(
+              (brand) =>
+                String(
+                  brand.name || ""
+                ).trim()
+            )
+            .filter(Boolean);
+
+        setBackendBrands(names);
+
+      })
+      .catch((err) => {
+
+        console.error(
+          "Error fetching brands:",
+          err
+        );
+
+      });
+
+  };
+
+  /* =====================================================
+     LOAD PRODUCTS + BRANDS
   ===================================================== */
 
   useEffect(() => {
+
     loadProducts();
+
+    loadBrands();
+
   }, []);
+
+  /* =====================================================
+     ALL BRAND FILTERS
+  ===================================================== */
+
+  const brands = useMemo(() => {
+
+    const productBrands =
+      products
+        .map(
+          (product) =>
+            String(
+              product.brand || ""
+            ).trim()
+        )
+        .filter(Boolean);
+
+    const allBrands = [
+      ...defaultBrands,
+      ...backendBrands,
+      ...productBrands,
+    ];
+
+    const uniqueBrands = [];
+
+    allBrands.forEach((brand) => {
+
+      const exists =
+        uniqueBrands.some(
+          (item) =>
+            item.toLowerCase() ===
+            brand.toLowerCase()
+        );
+
+      if (!exists) {
+
+        uniqueBrands.push(brand);
+
+      }
+
+    });
+
+    return [
+      "All",
+      ...uniqueBrands,
+    ];
+
+  }, [
+    products,
+    backendBrands,
+  ]);
 
   /* =====================================================
      FILTER PRODUCTS
   ===================================================== */
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      /*
-       * IMPORTANT:
-       *
-       * Display name/brand original ga untayi.
-       * Search kosam matrame lowercase chestunnam.
-       *
-       * Database lo save ayina:
-       * Dove
-       * dove
-       * DOVE
-       *
-       * exact ga preserve avutayi.
-       */
+  const filteredProducts =
+    useMemo(() => {
 
-      const matchesBrand =
-        selectedBrand === "All" ||
-        product.brand === selectedBrand;
+      return products.filter(
+        (product) => {
 
-      const search =
-        searchText.trim().toLowerCase();
+          const matchesBrand =
+            selectedBrand === "All" ||
+            product.brand ===
+              selectedBrand;
 
-      const productName =
-        String(product.name || "").toLowerCase();
+          const search =
+            searchText
+              .trim()
+              .toLowerCase();
 
-      const brandName =
-        String(product.brand || "").toLowerCase();
+          const productName =
+            String(
+              product.name || ""
+            ).toLowerCase();
 
-      const matchesSearch =
-        productName.includes(search) ||
-        brandName.includes(search);
+          const brandName =
+            String(
+              product.brand || ""
+            ).toLowerCase();
 
-      return (
-        matchesBrand &&
-        matchesSearch
+          const matchesSearch =
+            productName.includes(
+              search
+            ) ||
+            brandName.includes(
+              search
+            );
+
+          return (
+            matchesBrand &&
+            matchesSearch
+          );
+
+        }
       );
-    });
-  }, [
-    products,
-    searchText,
-    selectedBrand,
-  ]);
+
+    }, [
+      products,
+      searchText,
+      selectedBrand,
+    ]);
 
   /* =====================================================
      GET QUANTITY
   ===================================================== */
 
-  const getQuantity = (productId) => {
-    return quantities[productId] || 1;
+  const getQuantity = (
+    productId
+  ) => {
+
+    return (
+      quantities[productId] || 1
+    );
+
   };
 
   /* =====================================================
      INCREASE QUANTITY
   ===================================================== */
 
-  const increaseQuantity = (product) => {
+  const increaseQuantity = (
+    product
+  ) => {
+
     const currentQuantity =
       getQuantity(product.id);
 
     if (
-      currentQuantity >= product.stock
+      currentQuantity >=
+      product.stock
     ) {
+
       return;
+
     }
 
-    setQuantities((previous) => ({
-      ...previous,
+    setQuantities(
+      (previous) => ({
 
-      [product.id]:
-        currentQuantity + 1,
-    }));
+        ...previous,
+
+        [product.id]:
+          currentQuantity + 1,
+
+      })
+    );
+
   };
 
   /* =====================================================
      DECREASE QUANTITY
   ===================================================== */
 
-  const decreaseQuantity = (productId) => {
+  const decreaseQuantity = (
+    productId
+  ) => {
+
     const currentQuantity =
       getQuantity(productId);
 
-    if (currentQuantity <= 1) {
+    if (
+      currentQuantity <= 1
+    ) {
+
       return;
+
     }
 
-    setQuantities((previous) => ({
-      ...previous,
+    setQuantities(
+      (previous) => ({
 
-      [productId]:
-        currentQuantity - 1,
-    }));
+        ...previous,
+
+        [productId]:
+          currentQuantity - 1,
+
+      })
+    );
+
   };
 
   /* =====================================================
      TOTAL
   ===================================================== */
 
-  const getTotal = (product) => {
+  const getTotal = (
+    product
+  ) => {
+
     return (
       product.price *
       getQuantity(product.id)
     );
+
   };
 
   /* =====================================================
      ADD TO CART
   ===================================================== */
 
-  const addToCart = (product) => {
+  const addToCart = (
+    product
+  ) => {
+
     const quantity =
       getQuantity(product.id);
 
-    if (product.stock <= 0) {
+    if (
+      product.stock <= 0
+    ) {
+
       alert(
         "This product is out of stock."
       );
+
       return;
+
     }
 
-    if (quantity > product.stock) {
+    if (
+      quantity > product.stock
+    ) {
+
       alert(
         `Only ${product.stock} boxes are available.`
       );
+
       return;
+
     }
 
     const existingCart =
@@ -403,17 +579,22 @@ function Products() {
     let updatedCart;
 
     if (existingProduct) {
+
       const newQuantity =
         existingProduct.quantity +
         quantity;
 
       if (
-        newQuantity > product.stock
+        newQuantity >
+        product.stock
       ) {
+
         alert(
           `Only ${product.stock} boxes are available.`
         );
+
         return;
+
       }
 
       updatedCart =
@@ -427,7 +608,9 @@ function Products() {
                 }
               : item
         );
+
     } else {
+
       updatedCart = [
         ...existingCart,
 
@@ -440,17 +623,22 @@ function Products() {
           image: product.image,
           description:
             product.description,
-          quantity: quantity,
+          quantity:
+            quantity,
         },
       ];
+
     }
 
     localStorage.setItem(
       "cartItems",
-      JSON.stringify(updatedCart)
+      JSON.stringify(
+        updatedCart
+      )
     );
 
     navigate("/cart");
+
   };
 
   /* =====================================================
@@ -458,7 +646,9 @@ function Products() {
   ===================================================== */
 
   if (loading) {
+
     return (
+
       <main className="products-page">
 
         <section className="products-header">
@@ -486,7 +676,9 @@ function Products() {
         </section>
 
       </main>
+
     );
+
   }
 
   /* =====================================================
@@ -494,7 +686,9 @@ function Products() {
   ===================================================== */
 
   if (error) {
+
     return (
+
       <main className="products-page">
 
         <section className="products-header">
@@ -531,7 +725,12 @@ function Products() {
 
           <button
             type="button"
-            onClick={loadProducts}
+            onClick={() => {
+
+              loadProducts();
+              loadBrands();
+
+            }}
             style={{
               marginTop: "15px",
               padding: "10px 18px",
@@ -539,13 +738,16 @@ function Products() {
             }}
           >
             <FaSyncAlt />
-            {" "}Try Again
+            {" "}
+            Try Again
           </button>
 
         </section>
 
       </main>
+
     );
+
   }
 
   /* =====================================================
@@ -553,11 +755,8 @@ function Products() {
   ===================================================== */
 
   return (
-    <main className="products-page">
 
-      {/* =================================================
-          HEADER
-      ================================================= */}
+    <main className="products-page">
 
       <section className="products-header">
 
@@ -609,34 +808,48 @@ function Products() {
 
         <div className="brand-filter">
 
-          {brands.map((brand) => (
+          {brands.map(
+            (brand) => (
 
-            <button
-              type="button"
-              key={brand}
-              className={
-                selectedBrand === brand
-                  ? "filter-btn active"
-                  : "filter-btn"
-              }
-              onClick={() => {
-                setSelectedBrand(brand);
-
-                if (brand === "All") {
-                  navigate("/products");
-                } else {
-                  navigate(
-                    `/products?brand=${encodeURIComponent(
-                      brand
-                    )}`
-                  );
+              <button
+                type="button"
+                key={brand}
+                className={
+                  selectedBrand === brand
+                    ? "filter-btn active"
+                    : "filter-btn"
                 }
-              }}
-            >
-              {brand}
-            </button>
+                onClick={() => {
 
-          ))}
+                  setSelectedBrand(
+                    brand
+                  );
+
+                  if (
+                    brand === "All"
+                  ) {
+
+                    navigate(
+                      "/products"
+                    );
+
+                  } else {
+
+                    navigate(
+                      `/products?brand=${encodeURIComponent(
+                        brand
+                      )}`
+                    );
+
+                  }
+
+                }}
+              >
+                {brand}
+              </button>
+
+            )
+          )}
 
         </div>
 
@@ -654,7 +867,8 @@ function Products() {
           {filteredProducts.length}
         </strong>
 
-        {" "}products
+        {" "}
+        products
 
       </div>
 
@@ -680,229 +894,209 @@ function Products() {
 
         ) : (
 
-          filteredProducts.map((product) => {
+          filteredProducts.map(
+            (product) => {
 
-            const quantity =
-              getQuantity(product.id);
+              const quantity =
+                getQuantity(
+                  product.id
+                );
 
-            return (
+              return (
 
-              <article
-                className="product-card"
-                key={product.id}
-              >
+                <article
+                  className="product-card"
+                  key={product.id}
+                >
 
-                {/* =================================================
-                    IMAGE
-                ================================================= */}
+                  <div className="product-image-box">
 
-                <div className="product-image-box">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      onError={(event) => {
 
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    onError={(event) => {
-                      /*
-                       * If uploaded image has any problem,
-                       * try built-in image based on product name.
-                       */
+                        const mappedImage =
+                          getMappedProductImage(
+                            product.name
+                          );
 
-                      const mappedImage =
-                        getMappedProductImage(
-                          product.name
-                        );
+                        if (
+                          event.currentTarget.src.endsWith(
+                            mappedImage
+                          )
+                        ) {
 
-                      if (
-                        event.currentTarget.src.endsWith(
-                          mappedImage
-                        )
-                      ) {
-                        event.currentTarget.src =
-                          defaultImage;
-                      } else {
-                        event.currentTarget.src =
-                          mappedImage;
-                      }
-                    }}
-                  />
+                          event.currentTarget.src =
+                            defaultImage;
 
-                </div>
+                        } else {
 
-                {/* =================================================
-                    CONTENT
-                ================================================= */}
+                          event.currentTarget.src =
+                            mappedImage;
 
-                <div className="product-info">
+                        }
 
-                  <span className="product-brand">
-                    {product.brand}
-                  </span>
+                      }}
+                    />
 
-                  <h2>
-                    {product.name}
-                  </h2>
+                  </div>
 
-                  <p className="product-description">
-                    {product.description}
-                  </p>
+                  <div className="product-info">
 
-                  {/* =================================================
-                      PRICE
-                  ================================================= */}
+                    <span className="product-brand">
+                      {product.brand}
+                    </span>
 
-                  <div className="price-row">
+                    <h2>
+                      {product.name}
+                    </h2>
 
-                    <div>
+                    <p className="product-description">
+                      {product.description}
+                    </p>
 
-                      <strong className="product-price">
-                        ₹{product.price}
-                      </strong>
+                    <div className="price-row">
 
-                      <span className="per-box">
-                        / Box
-                      </span>
+                      <div>
+
+                        <strong className="product-price">
+                          ₹{product.price}
+                        </strong>
+
+                        <span className="per-box">
+                          / Box
+                        </span>
+
+                      </div>
 
                     </div>
 
-                  </div>
+                    <div className="box-info">
+                      📦 1 Box = 10 Pieces
+                    </div>
 
-                  {/* =================================================
-                      BOX INFO
-                  ================================================= */}
+                    <div
+                      className="box-info"
+                      style={{
+                        color:
+                          product.stock > 0
+                            ? "green"
+                            : "red",
+                      }}
+                    >
+                      📦 Stock:{" "}
+                      {product.stock}
+                    </div>
 
-                  <div className="box-info">
-                    📦 1 Box = 10 Pieces
-                  </div>
+                    <div className="quantity-row">
 
-                  {/* =================================================
-                      STOCK
-                  ================================================= */}
+                      <span>
+                        Quantity
+                      </span>
 
-                  <div
-                    className="box-info"
-                    style={{
-                      color:
-                        product.stock > 0
-                          ? "green"
-                          : "red",
-                    }}
-                  >
-                    📦 Stock: {product.stock}
-                  </div>
+                      <div className="quantity-control">
 
-                  {/* =================================================
-                      QUANTITY
-                  ================================================= */}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            decreaseQuantity(
+                              product.id
+                            )
+                          }
+                          disabled={
+                            quantity <= 1
+                          }
+                          aria-label="Decrease quantity"
+                        >
+                          <FaMinus />
+                        </button>
 
-                  <div className="quantity-row">
+                        <strong>
+                          {quantity}
+                        </strong>
 
-                    <span>
-                      Quantity
-                    </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            increaseQuantity(
+                              product
+                            )
+                          }
+                          disabled={
+                            product.stock <=
+                              0 ||
+                            quantity >=
+                              product.stock
+                          }
+                          aria-label="Increase quantity"
+                        >
+                          <FaPlus />
+                        </button>
 
-                    <div className="quantity-control">
+                      </div>
 
-                      <button
-                        type="button"
-                        onClick={() =>
-                          decreaseQuantity(
-                            product.id
-                          )
-                        }
-                        disabled={
-                          quantity <= 1
-                        }
-                        aria-label="Decrease quantity"
-                      >
-                        <FaMinus />
-                      </button>
+                    </div>
+
+                    <div className="total-row">
+
+                      <span>
+                        Total
+                      </span>
 
                       <strong>
-                        {quantity}
+                        ₹{getTotal(product)}
                       </strong>
+
+                    </div>
+
+                    <div className="product-actions">
 
                       <button
                         type="button"
+                        className="details-button"
                         onClick={() =>
-                          increaseQuantity(
+                          setSelectedProduct(
+                            product
+                          )
+                        }
+                      >
+                        <FaInfoCircle />
+                        Details
+                      </button>
+
+                      <button
+                        type="button"
+                        className="add-cart-button"
+                        onClick={() =>
+                          addToCart(
                             product
                           )
                         }
                         disabled={
-                          product.stock <= 0 ||
-                          quantity >=
-                            product.stock
+                          product.stock <=
+                          0
                         }
-                        aria-label="Increase quantity"
                       >
-                        <FaPlus />
+                        <FaShoppingCart />
+
+                        {product.stock <=
+                        0
+                          ? "Out of Stock"
+                          : "Add to Cart"}
+
                       </button>
 
                     </div>
 
                   </div>
 
-                  {/* =================================================
-                      TOTAL
-                  ================================================= */}
+                </article>
 
-                  <div className="total-row">
+              );
 
-                    <span>
-                      Total
-                    </span>
-
-                    <strong>
-                      ₹{getTotal(product)}
-                    </strong>
-
-                  </div>
-
-                  {/* =================================================
-                      ACTIONS
-                  ================================================= */}
-
-                  <div className="product-actions">
-
-                    <button
-                      type="button"
-                      className="details-button"
-                      onClick={() =>
-                        setSelectedProduct(
-                          product
-                        )
-                      }
-                    >
-                      <FaInfoCircle />
-                      Details
-                    </button>
-
-                    <button
-                      type="button"
-                      className="add-cart-button"
-                      onClick={() =>
-                        addToCart(product)
-                      }
-                      disabled={
-                        product.stock <= 0
-                      }
-                    >
-                      <FaShoppingCart />
-
-                      {product.stock <= 0
-                        ? "Out of Stock"
-                        : "Add to Cart"}
-
-                    </button>
-
-                  </div>
-
-                </div>
-
-              </article>
-
-            );
-          })
+            }
+          )
 
         )}
 
@@ -917,7 +1111,9 @@ function Products() {
         <div
           className="product-modal-overlay"
           onClick={() =>
-            setSelectedProduct(null)
+            setSelectedProduct(
+              null
+            )
           }
         >
 
@@ -928,23 +1124,17 @@ function Products() {
             }
           >
 
-            {/* =================================================
-                CLOSE
-            ================================================= */}
-
             <button
               type="button"
               className="modal-close"
               onClick={() =>
-                setSelectedProduct(null)
+                setSelectedProduct(
+                  null
+                )
               }
             >
               <FaTimes />
             </button>
-
-            {/* =================================================
-                IMAGE
-            ================================================= */}
 
             <img
               src={
@@ -955,6 +1145,7 @@ function Products() {
               }
               className="modal-product-image"
               onError={(event) => {
+
                 const mappedImage =
                   getMappedProductImage(
                     selectedProduct.name
@@ -965,12 +1156,17 @@ function Products() {
                     mappedImage
                   )
                 ) {
+
                   event.currentTarget.src =
                     defaultImage;
+
                 } else {
+
                   event.currentTarget.src =
                     mappedImage;
+
                 }
+
               }}
             />
 
@@ -994,7 +1190,8 @@ function Products() {
 
               ₹
               {selectedProduct.price}
-              {" "} / Box
+              {" "}
+              / Box
 
             </div>
 
@@ -1013,7 +1210,9 @@ function Products() {
               )}`}
               className="modal-products-link"
               onClick={() =>
-                setSelectedProduct(null)
+                setSelectedProduct(
+                  null
+                )
               }
             >
               <FaShoppingCart />
@@ -1027,7 +1226,9 @@ function Products() {
       )}
 
     </main>
+
   );
+
 }
 
 export default Products;

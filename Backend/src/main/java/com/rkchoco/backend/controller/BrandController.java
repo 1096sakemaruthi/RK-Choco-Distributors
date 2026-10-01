@@ -23,88 +23,108 @@ public class BrandController {
 
     private final BrandRepository brandRepository;
 
-    public BrandController(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
+    public BrandController(
+            BrandRepository brandRepository) {
 
-    // =========================================================
-    // GET ALL BRANDS
-    // =========================================================
+        this.brandRepository =
+                brandRepository;
+    }
 
     @GetMapping
     public List<Brand> getAllBrands() {
+
         return brandRepository.findAll();
     }
 
-    // =========================================================
-    // GET BRAND BY ID
-    // =========================================================
-
     @GetMapping("/{id}")
-    public ResponseEntity<Brand> getBrandById(@PathVariable Long id) {
+    public ResponseEntity<Brand> getBrandById(
+            @PathVariable Long id) {
 
-        return brandRepository.findById(id)
+        return brandRepository
+                .findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(
+                    ResponseEntity.notFound().build()
+                );
     }
 
-    // =========================================================
-    // ADD BRAND
-    // =========================================================
-
     @PostMapping
-    public Brand addBrand(@RequestBody Brand brand) {
+    public Brand addBrand(
+            @RequestBody Brand brand) {
 
         return brandRepository.save(brand);
     }
-
-    // =========================================================
-    // UPDATE BRAND
-    // =========================================================
 
     @PutMapping("/{id}")
     public ResponseEntity<Brand> updateBrand(
             @PathVariable Long id,
             @RequestBody Brand updatedBrand) {
 
-        return brandRepository.findById(id)
+        return brandRepository
+                .findById(id)
                 .map(existingBrand -> {
 
-                    existingBrand.setName(updatedBrand.getName());
-                    existingBrand.setDescription(updatedBrand.getDescription());
-                    existingBrand.setImage(updatedBrand.getImage());
+                    existingBrand.setName(
+                            updatedBrand.getName()
+                    );
+
+                    existingBrand.setDescription(
+                            updatedBrand.getDescription()
+                    );
+
+                    existingBrand.setImage(
+                            updatedBrand.getImage()
+                    );
 
                     Brand savedBrand =
-                            brandRepository.save(existingBrand);
+                            brandRepository.save(
+                                    existingBrand
+                            );
 
-                    return ResponseEntity.ok(savedBrand);
+                    return ResponseEntity.ok(
+                            savedBrand
+                    );
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(
+                    ResponseEntity.notFound().build()
+                );
     }
 
-    // =========================================================
-    // DELETE BRAND
-    // =========================================================
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBrand(
+            @PathVariable Long id) {
 
         if (!brandRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
         }
 
         brandRepository.deleteById(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
-    // =========================================================
-    // BRAND COUNT
-    // =========================================================
-
+    /*
+     * =====================================================
+     * UNIQUE BRAND COUNT
+     * =====================================================
+     *
+     * Example:
+     *
+     * Cadbury
+     * Cadbury
+     * Nestle
+     *
+     * Result = 2
+     */
     @GetMapping("/count")
     public long getBrandCount() {
 
-        return brandRepository.count();
+        return brandRepository
+                .countDistinctBrandNames();
     }
 }
