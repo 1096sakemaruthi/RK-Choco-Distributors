@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -19,6 +19,45 @@ function PlaceOrder() {
 
   const [placingOrder, setPlacingOrder] = useState(false);
   const [error, setError] = useState("");
+
+  /* =====================================================
+     LOAD LOGGED-IN CUSTOMER DETAILS
+  ===================================================== */
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(
+      localStorage.getItem("loggedInUser") || "null"
+    );
+
+    if (!loggedInUser) {
+      return;
+    }
+
+    const userMobile =
+      loggedInUser.mobileNumber ||
+      loggedInUser.phone ||
+      "";
+
+    if (userMobile) {
+      setMobileNumber(String(userMobile));
+    }
+
+    if (loggedInUser.ownerName) {
+      setOwnerName(loggedInUser.ownerName);
+    } else if (loggedInUser.name) {
+      setOwnerName(loggedInUser.name);
+    }
+
+    if (loggedInUser.shopName) {
+      setShopName(loggedInUser.shopName);
+    }
+
+    if (loggedInUser.deliveryAddress) {
+      setDeliveryAddress(
+        loggedInUser.deliveryAddress
+      );
+    }
+  }, []);
 
   /* =====================================================
      LOAD CART
@@ -81,8 +120,6 @@ function PlaceOrder() {
 
     /* =================================================
        LOGIN CHECK
-
-       User must be logged in before placing order.
     ================================================= */
 
     const isLoggedIn =
@@ -99,6 +136,19 @@ function PlaceOrder() {
 
       return;
     }
+
+    /* =================================================
+       GET LOGGED-IN CUSTOMER
+    ================================================= */
+
+    const loggedInUser = JSON.parse(
+      localStorage.getItem("loggedInUser") || "null"
+    );
+
+    const loggedInMobile =
+      loggedInUser?.mobileNumber ||
+      loggedInUser?.phone ||
+      "";
 
     /* =================================================
        VALIDATION
@@ -131,6 +181,20 @@ function PlaceOrder() {
     if (cartItems.length === 0) {
       setError(
         "Your cart is empty."
+      );
+      return;
+    }
+
+    /* =================================================
+       MOBILE NUMBER CHECK
+    ================================================= */
+
+    if (
+      loggedInMobile &&
+      String(loggedInMobile) !== String(mobileNumber)
+    ) {
+      setError(
+        "Please use your registered mobile number."
       );
       return;
     }
@@ -187,11 +251,19 @@ function PlaceOrder() {
       const orderData = {
         orderId: orderId,
 
-        shopName: shopName.trim(),
+        userId:
+          loggedInUser?.id ||
+          loggedInUser?.userId ||
+          "",
 
-        ownerName: ownerName.trim(),
+        shopName:
+          shopName.trim(),
 
-        mobileNumber: mobileNumber,
+        ownerName:
+          ownerName.trim(),
+
+        mobileNumber:
+          mobileNumber,
 
         deliveryAddress:
           deliveryAddress.trim(),
@@ -217,12 +289,7 @@ function PlaceOrder() {
         deliveryDate:
           deliveryDate.toISOString(),
 
-        /*
-         * IMPORTANT:
-         * Backend Order.java lo items String.
-         * Kabatti cart array ni JSON String ga send chestunnam.
-         */
-
+        /* Backend Order.java lo items String */
         items:
           JSON.stringify(cartItems),
 
@@ -237,12 +304,6 @@ function PlaceOrder() {
 
       /* ===============================================
          SEND ORDER TO SPRING BOOT
-
-         api.js baseURL:
-         https://cdms-backend-80mn.onrender.com/api
-
-         So "/orders" =
-         https://cdms-backend-80mn.onrender.com/api/orders
       =============================================== */
 
       const response =
@@ -265,10 +326,6 @@ function PlaceOrder() {
 
       /* ===============================================
          SUCCESS ORDER DATA
-
-         Backend items String ga return chestundi.
-         Customer UI kosam original cartItems array
-         use chestunnam.
       =============================================== */
 
       const successOrder = {
@@ -291,9 +348,6 @@ function PlaceOrder() {
 
       /* ===============================================
          SAVE ALL ORDERS LOCALLY
-
-         Existing customer Orders page
-         compatibility kosam.
       =============================================== */
 
       const existingOrders =
@@ -336,10 +390,6 @@ function PlaceOrder() {
         "Order placement error:",
         err
       );
-
-      /* ===============================================
-         BACKEND ERROR MESSAGE
-      =============================================== */
 
       if (err.response) {
         console.error(

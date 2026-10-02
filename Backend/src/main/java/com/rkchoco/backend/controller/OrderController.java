@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rkchoco.backend.model.Order;
+import com.rkchoco.backend.model.Product;
 import com.rkchoco.backend.repository.OrderRepository;
+import com.rkchoco.backend.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -40,28 +45,32 @@ import com.rkchoco.backend.repository.OrderRepository;
 public class OrderController {
 
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+    private final ObjectMapper objectMapper;
 
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(
+            OrderRepository orderRepository,
+            ProductRepository productRepository,
+            ObjectMapper objectMapper
+    ) {
         this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.objectMapper = objectMapper;
     }
-
 
     // =====================================================
     // CREATE ORDER
     // =====================================================
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(
+    @Transactional
+    public ResponseEntity<?> createOrder(
             @RequestBody Order order
     ) {
 
         // =================================================
         // GENERATE ORDER ID
         // =================================================
-        //
-        // Customer side nunchi orderId vachina,
-        // raakapoyina backend automatic ga ID generate chestundi.
-        //
 
         if (
             order.getOrderId() == null ||
@@ -80,7 +89,6 @@ public class OrderController {
             order.setOrderId(orderId);
         }
 
-
         // =================================================
         // DEFAULT STATUS
         // =================================================
@@ -92,7 +100,6 @@ public class OrderController {
 
             order.setStatus("Pending");
         }
-
 
         // =================================================
         // CREATED DATE / TIME
@@ -108,27 +115,223 @@ public class OrderController {
             );
         }
 
-
         // =================================================
-        // SAVE ORDER TO MYSQL
+        // CHECK AND DEDUCT PRODUCT STOCK
         // =================================================
 
-        Order savedOrder =
-            orderRepository.save(order);
+        try {
 
+            if (
+                order.getItems() == null ||
+                order.getItems().trim().isEmpty()
+            ) {
 
-        return ResponseEntity.ok(savedOrder);
+                return ResponseEntity
+                    .badRequest()
+                    .body(
+                        "Order items are required."
+                    );
+            }
+
+            JsonNode itemsNode =
+                objectMapper.readTree(
+                    order.getItems()
+                );
+
+            if (
+                !itemsNode.isArray() ||
+                itemsNode.size() == 0
+            ) {
+
+                return ResponseEntity
+                    .badRequest()
+                    .body(
+                        "Order items are empty."
+                    );
+            }
+
+            // =================================================
+            // FIRST CHECK ALL STOCK
+            // =================================================
+
+            for (JsonNode item : itemsNode) {
+
+                Long productId =
+                    getProductId(item);
+
+                int quantity =
+                    getQuantity(item);
+
+                if (productId == null) {
+
+                    return ResponseEntity
+                        .badRequest()
+                        .body(
+                            "Product ID is missing in order items."
+                        );
+                }
+
+                if (quantity <= 0) {
+
+                    return ResponseEntity
+                        .badRequest()
+                        .body(
+                            "Invalid product quantity."
+                        );
+                }
+
+                Product product =
+                    productRepository
+                        .findById(productId)
+                        .orElse(null);
+
+                if (product == null) {
+
+                    return ResponseEntity
+                        .badRequest()
+                        .body(
+                            "Product not found: " +
+                            productId
+                        );
+                }
+
+                // =================================================
+                // STOCK CHECK
+                // =================================================
+
+                if (
+                    product.getStock() < quantity
+                ) {
+
+                    return ResponseEntity
+                        .badRequest()
+                        .body(
+                            "Insufficient stock for product: " +
+                            product.getName() +
+                            ". Available stock: " +
+                            product.getStock()
+                        );
+                }
+            }
+
+            // =================================================
+            // SAVE ORDER
+            // =================================================
+
+            Order savedOrder =
+                orderRepository.save(order);
+
+            // =================================================
+            // DEDUCT STOCK
+            // =================================================
+
+            for (JsonNode item : itemsNode) {
+
+                Long productId =
+                    getProductId(item);
+
+                int quantity =
+                    getQuantity(item);
+
+                Product product =
+                    productRepository
+                        .findById(productId)
+                        .orElse(null);
+
+                if (product != null) {
+
+                    int newStock =
+                        product.getStock() - quantity;
+
+                    product.setStock(newStock);
+
+                    productRepository.save(product);
+                }
+            }
+
+            return ResponseEntity.ok(
+                savedOrder
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                .badRequest()
+                .body(
+                    "Unable to process order items."
+                );
+        }
     }
 
+    // =====================================================
+    // GET PRODUCT ID FROM ORDER ITEM
+    // =====================================================
+
+    private Long getProductId(
+            JsonNode item
+    ) {
+
+        JsonNode idNode =
+            item.get("id");
+
+        if (
+            idNode == null ||
+            idNode.isNull()
+        ) {
+
+            idNode =
+                item.get("productId");
+        }
+
+        if (
+            idNode == null ||
+            idNode.isNull()
+        ) {
+
+            return null;
+        }
+
+        try {
+
+            return idNode.asLong();
+
+        } catch (Exception e) {
+
+            return null;
+        }
+    }
+
+    // =====================================================
+    // GET QUANTITY FROM ORDER ITEM
+    // =====================================================
+
+    private int getQuantity(
+            JsonNode item
+    ) {
+
+        JsonNode quantityNode =
+            item.get("quantity");
+
+        if (
+            quantityNode == null ||
+            quantityNode.isNull()
+        ) {
+
+            return 0;
+        }
+
+        try {
+
+            return quantityNode.asInt();
+
+        } catch (Exception e) {
+
+            return 0;
+        }
+    }
 
     // =====================================================
     // GET CUSTOMER ORDERS
-    // =====================================================
-    //
-    // Customer mobile number tho
-    // aa customer orders matrame fetch chestundi.
-    //
-    // Latest order first lo vastundi.
     // =====================================================
 
     @GetMapping("/customer/{mobileNumber}")
@@ -145,7 +348,6 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-
     // =====================================================
     // GET ALL ORDERS
     // =====================================================
@@ -157,7 +359,6 @@ public class OrderController {
             orderRepository.findAll()
         );
     }
-
 
     // =====================================================
     // GET ONE ORDER
@@ -178,24 +379,8 @@ public class OrderController {
             );
     }
 
-
     // =====================================================
     // UPDATE ORDER STATUS
-    // =====================================================
-    //
-    // Admin side nunchi:
-    //
-    // Pending
-    // Processing
-    // Shipped
-    // Delivered
-    // Cancelled
-    //
-    // edhi select chesina
-    // MySQL lo status update avutundi.
-    //
-    // Customer Profile / Orders page next API call lo
-    // same updated status receive chestayi.
     // =====================================================
 
     @PutMapping("/{orderId}/status")
@@ -207,11 +392,6 @@ public class OrderController {
         String newStatus =
             request.get("status");
 
-
-        // =================================================
-        // STATUS EMPTY CHECK
-        // =================================================
-
         if (
             newStatus == null ||
             newStatus.trim().isEmpty()
@@ -219,28 +399,19 @@ public class OrderController {
 
             return ResponseEntity
                 .badRequest()
-                .body("Order status is required.");
+                .body(
+                    "Order status is required."
+                );
         }
-
 
         String finalStatus =
             newStatus.trim();
-
 
         return orderRepository
             .findByOrderId(orderId)
             .map(order -> {
 
-                // =================================================
-                // UPDATE STATUS
-                // =================================================
-
                 order.setStatus(finalStatus);
-
-
-                // =================================================
-                // CANCELLED
-                // =================================================
 
                 if (
                     finalStatus.equalsIgnoreCase(
@@ -254,30 +425,13 @@ public class OrderController {
                             .toString()
                     );
 
-                }
-
-
-                // =================================================
-                // OTHER STATUS
-                // =================================================
-                //
-                // Pending / Processing / Shipped / Delivered
-                // ayithe cancelledAt remove chestham.
-                //
-
-                else {
+                } else {
 
                     order.setCancelledAt(null);
                 }
 
-
-                // =================================================
-                // SAVE UPDATED ORDER TO MYSQL
-                // =================================================
-
                 Order updatedOrder =
                     orderRepository.save(order);
-
 
                 return ResponseEntity.ok(
                     updatedOrder
@@ -291,12 +445,8 @@ public class OrderController {
             );
     }
 
-
     // =====================================================
     // CANCEL ORDER
-    // =====================================================
-    //
-    // Customer side cancel button kosam.
     // =====================================================
 
     @PutMapping("/{orderId}/cancel")
@@ -308,16 +458,7 @@ public class OrderController {
             .findByOrderId(orderId)
             .map(order -> {
 
-                // =================================================
-                // SET CANCELLED STATUS
-                // =================================================
-
                 order.setStatus("Cancelled");
-
-
-                // =================================================
-                // CANCELLED DATE / TIME
-                // =================================================
 
                 order.setCancelledAt(
                     LocalDateTime
@@ -325,14 +466,8 @@ public class OrderController {
                         .toString()
                 );
 
-
-                // =================================================
-                // SAVE TO MYSQL
-                // =================================================
-
                 Order updatedOrder =
                     orderRepository.save(order);
-
 
                 return ResponseEntity.ok(
                     updatedOrder
@@ -345,7 +480,6 @@ public class OrderController {
                     .build()
             );
     }
-
 
     // =====================================================
     // DELETE ORDER
