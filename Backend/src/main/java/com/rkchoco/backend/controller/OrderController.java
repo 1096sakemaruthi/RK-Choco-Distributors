@@ -46,16 +46,16 @@ public class OrderController {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final ObjectMapper objectMapper;
+
+    private final ObjectMapper objectMapper =
+            new ObjectMapper();
 
     public OrderController(
             OrderRepository orderRepository,
-            ProductRepository productRepository,
-            ObjectMapper objectMapper
+            ProductRepository productRepository
     ) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
-        this.objectMapper = objectMapper;
     }
 
     // =====================================================
